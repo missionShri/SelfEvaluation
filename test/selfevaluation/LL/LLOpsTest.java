@@ -122,7 +122,7 @@ public class LLOpsTest {
 
     //################
     //null list
-    //TODO: adding to it as a feature
+    //Adding to it as a feature to insert
     @Test
     public void whenInsertAtEndOfNullListThenThrowException()
     {
