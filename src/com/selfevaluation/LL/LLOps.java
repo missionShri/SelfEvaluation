@@ -401,7 +401,8 @@ public class LLOps {
         return true;
     }
 
-    //:::Tricky:::
+    //:::Tricky::: See other variants of this at : https://www.geeksforgeeks.org/merge-two-sorted-linked-lists/
+    //Did inplace here
     public Node mergeSortedLists(LinkedList linkedList, LinkedList otherLinkedList) {
         if(linkedList==null && otherLinkedList==null)
         {
