@@ -2,6 +2,7 @@ package com.selfevaluation.LL;
 
 import com.selfevaluation.base.LinkedList;
 import com.selfevaluation.base.LinkedList.Node;
+import com.sun.tools.corba.se.idl.constExpr.Not;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +14,10 @@ public class LLOps {
 
     public LLOps(LinkedList linkedList) {
         this.linkedList = linkedList;
-        this.linkedList.setHead(null);
+        if(linkedList!=null)
+        {
+            this.linkedList.setHead(null);
+        }
     }
 
     //Time Complexity : O(1)
@@ -82,7 +86,7 @@ public class LLOps {
             }
         //}
 
-        printList(linkedList);
+        printList(linkedList.getHead());
         System.out.println("\n########");
     }
 
@@ -124,7 +128,7 @@ public class LLOps {
             incrementListSize();
         //}
 
-        printList(linkedList);
+        printList(linkedList.getHead());
         System.out.println("\n########");
     }
 
@@ -201,7 +205,7 @@ public class LLOps {
         prev.setNext(current.getNext());
         decrementListSize();
 
-        printList(linkedList);
+        printList(linkedList.getHead());
         System.out.println("\n########");
     }
 
@@ -241,12 +245,13 @@ public class LLOps {
             prev.setNext(current.getNext());
             decrementListSize();
         }
-        printList(linkedList);
+        printList(linkedList.getHead());
         System.out.println("\n########");
     }
 
 
     public int findListSize() {
+        long startTime = System.currentTimeMillis();
         if (linkedList == null) {
             throw new RuntimeException("Input is invalid");
         }
@@ -262,8 +267,210 @@ public class LLOps {
         }
 
         System.out.println("List size is: "+ i);
-        return i;
+        System.out.println("Time taken by findListSize "+ Long.toString(System.currentTimeMillis()-startTime));
 
+        return i;
+    }
+
+    public int findListSizeRecursively() {
+        long startTime = System.currentTimeMillis();
+        if (linkedList == null) {
+            throw new RuntimeException("Input is invalid");
+        }
+
+        Node current = linkedList.getHead();
+
+        //TODO: Prev only needed when there is update/mutation(add/delete) of list. Not while just traversing
+        int size  =  findListSizeRecursively(current,0);
+        System.out.println("Time taken by findListSizeRecursively "+ Long.toString(System.currentTimeMillis()-startTime));
+        System.out.println("List size is: "+ size);
+        return  size;
+    }
+
+    private int findListSizeRecursively(Node current, int i) {
+        if(current==null)
+        {
+            return i;
+        }
+        return findListSizeRecursively(current.getNext(),++i);
+    }
+
+    //:::Tricky:::
+    public boolean swapElements(int element1, int element2) {
+
+        if(linkedList == null || element1<0 || element2<0)
+        {
+            throw new RuntimeException("Invalid input");
+        }
+
+        Node current = linkedList.getHead();
+        Node prev, prev1, prev2, element1Tracker, element2Tracker;
+        prev = prev1 = prev2 = element1Tracker = element2Tracker =null;
+
+        //if(current!=null && (current.getData()==element1 || current.getData()==element2))
+        while(current!=null)
+        {
+            if(current.getData()==element1)
+            {
+                element1Tracker = current;
+                prev1 = prev;
+            }
+            if(current.getData() == element2)
+            {
+                element2Tracker = current;
+                prev2 = prev;
+            }
+
+            prev = current;
+            current = current.getNext();
+
+            //find the nodes
+            //find their prev
+            //swap prev1.next =  new & new.next = curr1.next & similarly for prev2
+         }
+
+         if(element1Tracker == null || element2Tracker == null)
+         {
+             throw new RuntimeException("Reached end of the list but element not found");
+         }
+
+         if(element1Tracker!=null && element2Tracker!=null)
+         {
+             Node tmp = element2Tracker.getNext();
+             if(prev1!=null)
+             {
+                 prev1.setNext(element2Tracker);
+             }
+             else{
+                 linkedList.setHead(element2Tracker);
+             }
+             if(prev2!=null)
+             {
+                 prev2.setNext(element1Tracker);
+             }
+             else{
+                 linkedList.setHead(element1Tracker);
+             }
+
+            element2Tracker.setNext(element1Tracker.getNext());
+            element1Tracker.setNext(tmp);
+
+            //Also set head
+            if(element1Tracker.getData() == linkedList.getHead().getData())
+            {
+                linkedList.setHead(element2Tracker);
+            }
+
+            printList(linkedList.getHead());
+            System.out.println("\n########");
+
+            return true;
+         }
+        return false;
+    }
+
+    public boolean reverseList() {
+        if(linkedList==null)
+        {
+            throw new RuntimeException("Invalid Input");
+        }
+
+        Node current = linkedList.getHead();
+        Node prev = null, next = null;
+
+        //1-element case
+        if(current.getNext()==null)
+        {
+            return true;
+        }
+
+        while (current!=null)
+        {
+            next = current.getNext();
+            current.setNext(prev);
+
+            prev = current;
+            current = next;
+        }
+        //Set head since that is the only pointer that the lists are aware of
+        linkedList.setHead(prev);
+
+        printList(linkedList.getHead());
+        System.out.println("\n########");
+
+        return true;
+    }
+
+    //:::Tricky:::
+    public Node mergeSortedLists(LinkedList linkedList, LinkedList otherLinkedList) {
+        if(linkedList==null && otherLinkedList==null)
+        {
+            throw new RuntimeException("Invalid Input");
+        }
+
+        if(linkedList==null)
+        {
+            return otherLinkedList.getHead();
+        }
+
+        if(otherLinkedList==null)
+        {
+            return linkedList.getHead();
+        }
+
+        Node currentFirst = null, currentSecond = null;
+        Node  prevFirst = null;
+        Node prevSecond = null;
+        Node  nextFirst = null;
+        Node nextSecond = null;
+
+        Node start = null;
+
+        if(linkedList.getHead().getData()<= otherLinkedList.getHead().getData())
+        {
+            currentFirst= linkedList.getHead();
+            currentSecond = otherLinkedList.getHead();
+        }
+        else {
+
+            currentFirst = otherLinkedList.getHead();
+            currentSecond = linkedList.getHead();
+        }
+        start = currentFirst;
+
+        //Trying in-place merging
+        while (currentFirst!=null && currentSecond!=null)
+        {
+            if(currentFirst.getData()<=currentSecond.getData())
+            {
+                prevFirst = currentFirst;
+                currentFirst = currentFirst.getNext();
+
+                if((prevFirst!=null && prevFirst.getData()<= currentSecond.getData()) && (currentFirst!=null && currentFirst.getData()>=currentSecond.getData()))
+                {
+                    nextSecond = currentSecond.getNext();
+                    nextFirst = currentFirst.getNext();
+
+                    prevFirst.setNext(currentSecond);
+                    currentSecond.setNext(currentFirst);
+
+                    prevFirst = prevFirst.getNext();
+                    currentSecond = nextSecond;
+                }
+            }
+        }
+
+        //linkedList  is exhausted
+        if(currentSecond!=null)
+        {
+            prevFirst.setNext(currentSecond);
+            currentSecond = currentSecond.getNext();
+        }
+
+        printList(start);
+        System.out.println("\n########");
+
+        return linkedList.getHead();
     }
 
     private void incrementListSize() {
@@ -277,21 +484,102 @@ public class LLOps {
         }
     }
 
-    public static void printList(LinkedList linkedList)
+    public static void printList(Node node)
     {
-        if(linkedList != null)
+        if(node != null)
         {
-            Node n = linkedList.getHead();
             System.out.println();
-            while (n != null)
+            while (node != null)
             {
-                System.out.print(n.getData());
-                if(n.getNext()!=null)
+                System.out.print(node.getData());
+                if(node.getNext()!=null)
                 {
                     System.out.print("-->");
                 }
-                n = n.getNext();
+                node = node.getNext();
             }
         }
     }
 }
+
+
+//Concrete
+/*
+public Node mergeSortedLists(LinkedList firstLinkedList, LinkedList secondLinkedList) {
+    if(firstLinkedList==null && secondLinkedList==null)
+    {
+        throw new RuntimeException("Invalid input");
+    }
+
+    if(firstLinkedList==null || firstLinkedList.getHead()==null)
+    {
+        return secondLinkedList.getHead();
+    }
+    else if (secondLinkedList ==null || secondLinkedList.getHead()==null)
+    {
+        return firstLinkedList.getHead();
+    }
+
+    Node currentFirst = firstLinkedList.getHead();
+    Node prevFirst = null;
+    Node nextFirst = null;
+    Node currentSecond = secondLinkedList.getHead();
+    Node prevSecond = null;
+    Node nextSecond = null;
+
+    //merging second in to the first while both last
+    while(currentFirst!=null && currentSecond!=null)
+    {
+        if(currentFirst.getData()<currentSecond.getData())
+        {
+            prevFirst = currentFirst;
+            currentFirst = currentFirst.getNext();
+        }
+
+        else
+        {
+            nextFirst = currentFirst.getNext();
+            if(prevFirst!=null)
+            {
+                prevFirst.setNext(currentSecond);
+            }
+            nextSecond = currentSecond.getNext();
+            currentSecond.setNext(currentFirst);
+            if(prevSecond!=null)
+            {
+                prevSecond.setNext(nextSecond);
+            }
+
+            prevFirst = currentSecond;
+            currentFirst = nextFirst;
+            currentSecond = nextSecond;
+
+                */
+/*nextFirst = currentFirst.getNext();
+                nextSecond = currentSecond.getNext();
+                currentFirst.setNext(currentSecond);
+                currentSecond.setNext(nextFirst);
+
+                prevFirst = currentSecond;
+                currentFirst = nextFirst;
+                currentSecond = nextSecond;*//*
+
+        }
+    }
+
+    //Append un-finished list
+    if(currentSecond!=null)
+    {
+        while(currentSecond!=null)
+        {
+            prevFirst.setNext(currentSecond);
+            prevFirst = currentSecond;
+            currentSecond = currentSecond.getNext();
+        }
+    }
+    firstLinkedList.setHead(firstLinkedList.getHead());
+    printList(firstLinkedList);
+    System.out.println("\n########");
+
+    return firstLinkedList.getHead();
+}*/
