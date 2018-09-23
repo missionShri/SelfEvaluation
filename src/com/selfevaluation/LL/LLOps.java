@@ -2,7 +2,6 @@ package com.selfevaluation.LL;
 
 import com.selfevaluation.base.LinkedList;
 import com.selfevaluation.base.LinkedList.Node;
-import com.sun.tools.corba.se.idl.constExpr.Not;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +19,9 @@ public class LLOps {
         }
     }
 
+    /* TODO : Insert at start does not need any loop. Only pointer modification.
+              Insert in the middle/last does need loop. */
+    /* TODO : Its ok for the container to not exist for insert operations.*/
     //Time Complexity : O(1)
     public void insertAtFront(Node nodeToBeAdded) {
         if(linkedList == null)
@@ -30,6 +32,8 @@ public class LLOps {
             return;
         }
         nodeToBeAdded.setNext(linkedList.getHead());
+
+        //Modifying the list pointer
         linkedList.setHead(nodeToBeAdded);
         incrementListSize();
     }
@@ -39,9 +43,10 @@ public class LLOps {
 
         if(nodeToBeAdded == null)
         {
-            throw new RuntimeException("Input is empty");
+            throw new IllegalArgumentException("Input is empty");
         }
 
+        //Zero-element case
         if (linkedList == null)
         {
             linkedList =  new LinkedList();
@@ -50,6 +55,7 @@ public class LLOps {
             return;
         }
 
+        //current = 1st  element (head)
         Node current = linkedList.getHead();
 
         // Its a bit easier to handle 1-element cases, separately. But leads to code duplication and hairy if-else
@@ -66,12 +72,19 @@ public class LLOps {
         }
         else if(current.getNext()!=null)
         {*/
-            //dont want to make use of size here, since its not standard
-            while(current.getNext()!= null && current.getData() != value)
+            //don't want to make use of size here, since its not standard
+            while(current!=null && current.getData() != value)
             {
                 current = current.getNext();
             }
 
+            //first if condition check
+            if(current==null)
+            {
+                throw new RuntimeException("Reached end of the list but element not found");
+            }
+
+            //second if condition check
             if(current.getData()==value)
             {
                 //This looks like a standard thing for single linked list
@@ -79,10 +92,6 @@ public class LLOps {
                 current.setNext(nodeToBeAdded);
                 nodeToBeAdded.setNext(tmp);
                 incrementListSize();
-            }
-            else if(current.getNext()==null)
-            {
-                throw new RuntimeException("Reached end of the list but element not found");
             }
         //}
 
@@ -93,9 +102,10 @@ public class LLOps {
     public void insertAtEnd(Node nodeToBeAdded) {
         if(nodeToBeAdded == null)
         {
-            throw new RuntimeException("Input is empty");
+            throw new IllegalArgumentException("Input is empty");
         }
 
+        //zero-element case
         if(linkedList == null)
         {
             linkedList =  new LinkedList();
@@ -104,9 +114,12 @@ public class LLOps {
             return;
         }
 
+        //current = 1st element
         Node current = linkedList.getHead();
+        Node prev = null;
 
-        //handle 1 element case separately. NOT ANYMORE due to above guidance
+        //handle 1 element case separately. NOT ANYMORE due to guidance:
+        //TODO: The battle between curr and prev again.Lets just standardize our use on the lines of https://www.geeksforgeeks.org/linked-list-set-3-deleting-node
         /*if(current.getNext()==null)
         {
             current.setNext(nodeToBeAdded);
@@ -117,13 +130,15 @@ public class LLOps {
         //Multi element case
         else
         {*/
-            while (current.getNext()!=null)
+            while (current!=null)
             {
+                prev = current;
                 current = current.getNext();
             }
+
             //This looks like a standard thing for single linked list
-            Node tmp = current.getNext();
-            current.setNext(nodeToBeAdded);
+            Node tmp = prev.getNext();
+            prev.setNext(nodeToBeAdded);
             nodeToBeAdded.setNext(tmp);
             incrementListSize();
         //}
@@ -133,10 +148,11 @@ public class LLOps {
     }
 
     public void delete(int value) {
-        if (linkedList == null || value < 0) {
+        if (linkedList == null || linkedList.getHead()==null || value < 0) {
             throw new RuntimeException("Input is empty");
         }
 
+        //current = 1st element
         Node current = linkedList.getHead();
         Node prev = null;
 
@@ -149,7 +165,7 @@ public class LLOps {
         //
         //        if (current.getNext() == null) {
         //            if (current.getData() != value) {
-        //                throw new RuntimeException("Reached end of the list but element not found");
+        //                throw new IllegalArgumentException("Reached end of the list but element not found");
         //            } else if (current.getData() == value) {
         //                    /*//single element
         //                    if(prev == null) {
@@ -177,11 +193,10 @@ public class LLOps {
         //            current = null;
         //            decrementListSize();
         //        }
-
         // ##############
 
         //TODO: As prescribed at https://www.geeksforgeeks.org/linked-list-set-3-deleting-node/
-        //first node, single node
+        //1-element case ...thre is no zero-element list case in deletion
         if(current!=null && current.getData() == value)
         {
             linkedList.setHead(current.getNext());
@@ -189,18 +204,20 @@ public class LLOps {
             return;
         }
 
+        //Traverse
         while (current!=null && current.getData()!=value)
         {
             prev = current;
             current = current.getNext();
         }
 
+        //first if-condition
         if(current==null)
         {
             throw new RuntimeException("Reached end of the list but element not found");
         }
 
-        //Implicit that the value is found
+        //Implicit check for second part of the 'if-condition'
         //Last node, middle node all treated here
         prev.setNext(current.getNext());
         decrementListSize();
@@ -211,14 +228,16 @@ public class LLOps {
 
     //TODO: Got simpler due to logic as prescribed at https://www.geeksforgeeks.org/linked-list-set-3-deleting-node/
     public void deleteAtPosition(int position) {
-        if (linkedList == null || position < 0) {
+        if (linkedList == null || linkedList.getHead()==null || position < 0) {
             throw new RuntimeException("Input is invalid");
         }
 
+        //current = 1st element
         Node current = linkedList.getHead();
         Node prev = null;
 
         int i = 0;
+        //Single element list
         if(current!=null && i==position)
         {
             linkedList.setHead(current.getNext());
@@ -233,11 +252,13 @@ public class LLOps {
             i++;
         }
 
+        //first if-condition
         if(current==null)
         {
             throw new RuntimeException("Reached end of the list but element not found");
         }
 
+        //second if-condition
         //de-link
         //implicit
         if(i==position)
@@ -300,7 +321,7 @@ public class LLOps {
 
         if(linkedList == null || element1<0 || element2<0)
         {
-            throw new RuntimeException("Invalid input");
+            throw new IllegalArgumentException("Invalid input");
         }
 
         Node current = linkedList.getHead();
@@ -406,7 +427,7 @@ public class LLOps {
     public Node mergeSortedLists(LinkedList linkedList, LinkedList otherLinkedList) {
         if(linkedList==null && otherLinkedList==null)
         {
-            throw new RuntimeException("Invalid Input");
+            throw new IllegalArgumentException("Invalid Input");
         }
 
         if(linkedList==null)
@@ -509,7 +530,7 @@ public class LLOps {
 public Node mergeSortedLists(LinkedList firstLinkedList, LinkedList secondLinkedList) {
     if(firstLinkedList==null && secondLinkedList==null)
     {
-        throw new RuntimeException("Invalid input");
+        throw new IllegalArgumentException("Invalid input");
     }
 
     if(firstLinkedList==null || firstLinkedList.getHead()==null)

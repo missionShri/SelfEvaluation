@@ -68,7 +68,7 @@ public class LLOpsTest {
         try {
             llOps.insertAfterGivenNode(null, 8);
         } catch (Exception e) {
-            Assert.assertEquals(RuntimeException.class,e.getClass());
+            Assert.assertEquals(IllegalArgumentException.class,e.getClass());
             Assert.assertEquals("Input is empty",e.getMessage());
         }
     }
@@ -137,7 +137,7 @@ public class LLOpsTest {
         try {
             llOps.insertAtEnd(null);
         } catch (Exception e) {
-            Assert.assertEquals(RuntimeException.class,e.getClass());
+            Assert.assertEquals(IllegalArgumentException.class,e.getClass());
             Assert.assertEquals("Input is empty",e.getMessage());
         }
     }
@@ -394,7 +394,7 @@ public class LLOpsTest {
             llOps.swapElements(1,2);
         }catch (Exception e)
         {
-            Assert.assertEquals(RuntimeException.class,e.getClass());
+            Assert.assertEquals(IllegalArgumentException.class,e.getClass());
             Assert.assertEquals("Invalid input", e.getMessage());
         }
     }
@@ -529,7 +529,7 @@ public class LLOpsTest {
             llOps.mergeSortedLists(llOps.getLinkedList(),llOpsOther.getLinkedList());
         }catch (Exception e)
         {
-            Assert.assertEquals(RuntimeException.class,e.getClass());
+            Assert.assertEquals(IllegalArgumentException.class,e.getClass());
             Assert.assertEquals("Invalid Input", e.getMessage());
         }
 
