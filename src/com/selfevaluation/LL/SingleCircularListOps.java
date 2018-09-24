@@ -180,7 +180,7 @@ public class SingleCircularListOps {
             decrementListSize();
         }
 
-        //Modifying the list pointer
+        //Modifying the list pointer, since we just deleted the node pointed to by last pointer
         if(current == singleCircularLinkedList.getLast())
         {
             singleCircularLinkedList.setLast(prev);
@@ -239,7 +239,7 @@ public class SingleCircularListOps {
             decrementListSize();
         }
 
-        //DS pointer manipulation
+        //Modifying the list pointer, since we just deleted the node pointed to by last pointer
         if(current == singleCircularLinkedList.getLast())
         {
             singleCircularLinkedList.setLast(prev);
