@@ -73,18 +73,19 @@ public class LLOps {
         else if(current.getNext()!=null)
         {*/
             //don't want to make use of size here, since its not standard
+            //(current != last->next)
             while(current!=null && current.getData() != value)
             {
                 current = current.getNext();
             }
 
-            //first if condition check
+            //first-if-condition-check
             if(current==null)
             {
                 throw new RuntimeException("Reached end of the list but element not found");
             }
 
-            //second if condition check
+            //second-if-condition-check
             if(current.getData()==value)
             {
                 //This looks like a standard thing for single linked list
@@ -130,6 +131,7 @@ public class LLOps {
         //Multi element case
         else
         {*/
+            //(current != last->next)
             while (current!=null)
             {
                 prev = current;
@@ -204,14 +206,14 @@ public class LLOps {
             return;
         }
 
-        //Traverse
+        //current != last->next)
         while (current!=null && current.getData()!=value)
         {
             prev = current;
             current = current.getNext();
         }
 
-        //first if-condition
+        //first-if-condition-check
         if(current==null)
         {
             throw new RuntimeException("Reached end of the list but element not found");
@@ -245,6 +247,7 @@ public class LLOps {
             return;
         }
 
+        //(current != last->next)
         while(current!=null && i<position)
         {
             prev = current;
@@ -252,13 +255,13 @@ public class LLOps {
             i++;
         }
 
-        //first if-condition
+        //first-if-condition-check
         if(current==null)
         {
             throw new RuntimeException("Reached end of the list but element not found");
         }
 
-        //second if-condition
+        //second-if-condition-check
         //de-link
         //implicit
         if(i==position)
@@ -329,6 +332,7 @@ public class LLOps {
         prev = prev1 = prev2 = element1Tracker = element2Tracker =null;
 
         //if(current!=null && (current.getData()==element1 || current.getData()==element2))
+        //(current != last->next)
         while(current!=null)
         {
             if(current.getData()==element1)
@@ -405,6 +409,7 @@ public class LLOps {
             return true;
         }
 
+        //(current != last->next)
         while (current!=null)
         {
             next = current.getNext();
@@ -461,6 +466,7 @@ public class LLOps {
         start = currentFirst;
 
         //Trying in-place merging
+        //(current != last->next)
         while (currentFirst!=null && currentSecond!=null)
         {
             if(currentFirst.getData()<=currentSecond.getData())
