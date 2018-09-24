@@ -315,4 +315,64 @@ public class SingleCircularListOpsTest {
         System.out.println();
 
     }
+
+    //##########
+
+    //Empty list
+    @Test(expected = RuntimeException.class)
+    public void whenSplitEmptyListThenThrowException()
+    {
+        singleCircularListOps.getSingleCircularLinkedList().setLast(null);
+        singleCircularListOps.splitInMiddle();
+    }
+
+    //single element
+    @Test()
+    public void whenSplitSingleElementListThenReturnList()
+    {
+        singleCircularListOps.insertAtStart(node0);
+        singleCircularListOps.splitInMiddle();
+
+        SingleCircularListOps.printList(singleCircularListOps.getSingleCircularLinkedList().getLast());
+        System.out.println();
+
+        Assert.assertEquals(1, singleCircularListOps.getSingleCircularLinkedList().getSize());
+    }
+
+    //multi element even-numbered
+    @Test()
+    public void whenSplitMultiEvenNumberElementListThenReturnList()
+    {
+        singleCircularListOps.insertAtStart(node0);
+        singleCircularListOps.insertAtStart(new Node(1));
+        singleCircularListOps.insertAtStart(new Node(2));
+        singleCircularListOps.insertAtStart(new Node(3));
+
+        SingleCircularListOps.printList(singleCircularListOps.getSingleCircularLinkedList().getLast());
+        System.out.println();
+        int originalSize = singleCircularListOps.getSingleCircularLinkedList().getSize();
+
+        singleCircularListOps.splitInMiddle();
+
+        Assert.assertEquals(originalSize/2, singleCircularListOps.getSingleCircularLinkedList().getSize());
+    }
+
+    //multi element even-numbered
+    @Test()
+    public void whenSplitMultiOddNumberElementListThenReturnList()
+    {
+        singleCircularListOps.insertAtStart(node0);
+        singleCircularListOps.insertAtStart(new Node(1));
+        singleCircularListOps.insertAtStart(new Node(2));
+        singleCircularListOps.insertAtStart(new Node(3));
+        singleCircularListOps.insertAtStart(new Node(4));
+
+        SingleCircularListOps.printList(singleCircularListOps.getSingleCircularLinkedList().getLast());
+        System.out.println();
+        int originalSize = singleCircularListOps.getSingleCircularLinkedList().getSize();
+
+        singleCircularListOps.splitInMiddle();
+
+        Assert.assertEquals(originalSize/2, singleCircularListOps.getSingleCircularLinkedList().getSize());
+    }
 }

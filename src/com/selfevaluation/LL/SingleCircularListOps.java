@@ -156,6 +156,7 @@ public class SingleCircularListOps {
 
         //current = 1st  element (head)
         Node current = singleCircularLinkedList.getLast().getNext();
+        //prev = prevToCurrent
         Node prev = singleCircularLinkedList.getLast();
         boolean isStart = true;
 
@@ -211,7 +212,9 @@ public class SingleCircularListOps {
             }
         }
 
+        //current = 1st  element (head)
         Node current = singleCircularLinkedList.getLast().getNext();
+        //prev = prevToCurrent
         Node prev = singleCircularLinkedList.getLast();
         boolean isStart = true;
         int currentPos = 0;
@@ -245,6 +248,81 @@ public class SingleCircularListOps {
             singleCircularLinkedList.setLast(prev);
         }
         return;
+    }
+
+    public void splitInMiddle() {
+        if(singleCircularLinkedList == null || singleCircularLinkedList.getLast() == null)
+        {
+            throw new RuntimeException("Invalid input");
+        }
+
+        //1-element case
+        if(singleCircularLinkedList.getLast() == singleCircularLinkedList.getLast().getNext())
+        {
+            return;
+        }
+
+        //find size
+        //current = 1st  element (head)
+        Node current = singleCircularLinkedList.getLast().getNext();
+        int size = 0;
+        boolean isStart = true;
+
+        //current != last->next
+        while (current!= singleCircularLinkedList.getLast().getNext() || isStart)
+        {
+            isStart = false;
+            current = current.getNext();
+            size++;
+        }
+
+        //traverse till size/2
+        current = singleCircularLinkedList.getLast().getNext();
+        isStart = true;
+        int i = 1;
+
+        //for middle element to fall in first-list for the odd-numbered list
+        if(size%2 == 1)
+        {
+            i = 0;
+        }
+
+        // when measuring against size, better to measure relative to 1 unlike array-indices
+        // for e.g.-> i =0, size =4 , size/2 = 2 ..but for 0-startIndex traversal would cover 3 elements till index-2 leaving only 1 element to spare
+        while ((current!= singleCircularLinkedList.getLast().getNext() || isStart) && i < (size/2))
+        {
+            isStart = false;
+            current = current.getNext();
+            i++;
+        }
+
+        //first-condition-check
+        if(current == singleCircularLinkedList.getLast().getNext() && !isStart)
+        {
+            //???
+        }
+
+      if (i == (size/2))
+        {
+            Node secondListLast = singleCircularLinkedList.getLast();
+            Node secondListFirst = current.getNext();
+
+            current.setNext(singleCircularLinkedList.getLast().getNext());
+            singleCircularLinkedList.setLast(current);
+            singleCircularLinkedList.setSize(size/2);
+
+            System.out.print("Original list:\t");
+            printList(singleCircularLinkedList.getLast());
+
+            SingleCircularLinkedList secondCircularLinkedList =  new SingleCircularLinkedList();
+            secondCircularLinkedList.setLast(secondListLast);
+            secondCircularLinkedList.getLast().setNext(secondListFirst);
+            secondCircularLinkedList.setSize(size/2);
+
+            System.out.print("Second list:\t");
+            printList(secondCircularLinkedList.getLast());
+        }
+
     }
 
     private void decrementListSize() {
@@ -303,6 +381,6 @@ public class SingleCircularListOps {
                 System.out.print("==>");
             }
         }
-
+        System.out.println();
     }
 }
