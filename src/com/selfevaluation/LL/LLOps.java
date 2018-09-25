@@ -89,9 +89,16 @@ public class LLOps {
             if(current.getData()==value)
             {
                 //This looks like a standard thing for single linked list
-                Node tmp = current.getNext();
+                /*Node tmp = current.getNext();
                 current.setNext(nodeToBeAdded);
                 nodeToBeAdded.setNext(tmp);
+                incrementListSize();*/
+
+                //This looks like a standard thing for single linked list
+                //first perform manipulation on the free-node, to let it take shape of the list pointer
+                nodeToBeAdded.setNext(current.getNext());
+                //then transform next/prev of the current list node to start associating to the new node
+                current.setNext(nodeToBeAdded);
                 incrementListSize();
             }
         //}
@@ -139,10 +146,19 @@ public class LLOps {
             }
 
             //This looks like a standard thing for single linked list
-            Node tmp = prev.getNext();
+            /*Node tmp = prev.getNext();
             prev.setNext(nodeToBeAdded);
             nodeToBeAdded.setNext(tmp);
-            incrementListSize();
+            incrementListSize();*/
+
+            //This looks like a standard thing for single linked list
+            //first perform manipulation on the free-node, to let it take shape of the list pointer
+                nodeToBeAdded.setNext(null);
+            //then transform next/prev of the current list node to start associating to the new node
+                prev.setNext(nodeToBeAdded);
+                //
+                incrementListSize();
+
         //}
 
         printList(linkedList.getHead());

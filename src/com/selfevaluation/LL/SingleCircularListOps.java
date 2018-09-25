@@ -39,10 +39,18 @@ public class SingleCircularListOps {
             return;
         }
 
-        Node prevLast = singleCircularLinkedList.getLast();
+        /*Node prevLast = singleCircularLinkedList.getLast();
         singleCircularLinkedList.setLast(nodeToBeAdded);
         singleCircularLinkedList.getLast().setNext(prevLast.getNext());
         prevLast.setNext(singleCircularLinkedList.getLast());
+        incrementListSize();*/
+
+        //first perform manipulation on the free-node, to let it take shape of the list pointer
+        nodeToBeAdded.setNext(singleCircularLinkedList.getLast().getNext());
+        //then transform next/prev of the current list node to start associating to the new node
+        singleCircularLinkedList.getLast().setNext(nodeToBeAdded);
+        //finally manipulate the list node
+        singleCircularLinkedList.setLast(nodeToBeAdded);
         incrementListSize();
 
         //printList(singleCircularLinkedList.getLast());
@@ -70,10 +78,16 @@ public class SingleCircularListOps {
             return;
         }
 
-        Node tmp = singleCircularLinkedList.getLast().getNext();
+        /*Node tmp = singleCircularLinkedList.getLast().getNext();
         singleCircularLinkedList.getLast().setNext(nodeToBeAdded);
         incrementListSize();
-        singleCircularLinkedList.getLast().getNext().setNext(tmp);
+        singleCircularLinkedList.getLast().getNext().setNext(tmp);*/
+
+        //first perform manipulation on the free-node, to let it take shape of the list pointer
+        nodeToBeAdded.setNext(singleCircularLinkedList.getLast().getNext());
+        //then transform next/prev of the current list node to start associating to the new node
+        singleCircularLinkedList.getLast().setNext(nodeToBeAdded);
+        incrementListSize();
 
         //printList(singleCircularLinkedList.getLast());
         return;
@@ -122,9 +136,15 @@ public class SingleCircularListOps {
         //second-if-condition-check
         if(current.getData() == nodeDataToBeAddedAfter)
         {
-            Node tmp = current.getNext();
+            /*Node tmp = current.getNext();
             current.setNext(nodeToBeAdded);
             nodeToBeAdded.setNext(tmp);
+            incrementListSize();*/
+
+            //first perform manipulation on the free-node, to let it take shape of the list pointer
+            nodeToBeAdded.setNext(current.getNext());
+            //then transform next/prev of the current list node to start associating to the new node
+            current.setNext(nodeToBeAdded);
             incrementListSize();
         }
 
@@ -168,7 +188,7 @@ public class SingleCircularListOps {
             current = current.getNext();
         }
 
-        ////first-if-condition-check  but with (isStart = false) to mark that
+        //first-if-condition-check  but with (isStart = false) to mark that
         if(current==singleCircularLinkedList.getLast().getNext() && !isStart)
         {
             throw new RuntimeException("Reached end of the list but element not found");
@@ -359,8 +379,11 @@ public class SingleCircularListOps {
         //First-condition-check
         if(current == singleCircularLinkedList.getLast().getNext() && !isStart)
         {
+            //first perform manipulation on the free-node, to let it take shape of the list pointer
             newNode.setNext(singleCircularLinkedList.getLast().getNext());
+            //then transform next/prev of the current list node to start associating to the new node
             singleCircularLinkedList.getLast().setNext(newNode);
+            //finally manipulate the list node
             singleCircularLinkedList.setLast(newNode);
             incrementListSize();
             return;
