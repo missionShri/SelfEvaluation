@@ -279,13 +279,10 @@ public class SingleCircularListOps {
         //traverse till size/2
         current = singleCircularLinkedList.getLast().getNext();
         isStart = true;
-        int i = 1;
 
+        //critical to determine where the odd-size list's middle element will go
         //for middle element to fall in first-list for the odd-numbered list
-        if(size%2 == 1)
-        {
-            i = 0;
-        }
+        int i = (size%2 == 1)?0:1;
 
         // when measuring against size, better to measure relative to 1 unlike array-indices
         // for e.g.-> i =0, size =4 , size/2 = 2 ..but for 0-startIndex traversal would cover 3 elements till index-2 leaving only 1 element to spare
@@ -302,6 +299,7 @@ public class SingleCircularListOps {
             //???
         }
 
+        //second-condition-check
       if (i == (size/2))
         {
             Node secondListLast = singleCircularLinkedList.getLast();
@@ -321,8 +319,68 @@ public class SingleCircularListOps {
 
             System.out.print("Second list:\t");
             printList(secondCircularLinkedList.getLast());
+            return;
         }
 
+    }
+
+    public void sortedInsert(int nodeValueToBeAdded) {
+        if(nodeValueToBeAdded<0)
+        {
+            throw new IllegalArgumentException("Invalid input");
+        }
+
+        Node newNode = new Node(nodeValueToBeAdded);
+
+        //Zero-list case
+        if(singleCircularLinkedList == null || singleCircularLinkedList.getLast() == null)
+        {
+            singleCircularLinkedList =  new SingleCircularLinkedList();
+            singleCircularLinkedList.setLast(newNode);
+            singleCircularLinkedList.getLast().setNext(newNode);
+            incrementListSize();
+            return;
+        }
+
+        //current = 1st  element (head)
+        Node current = singleCircularLinkedList.getLast().getNext();
+        //prev = prevToCurrent
+        Node prev = singleCircularLinkedList.getLast();
+        boolean isStart = true;
+
+        while ((current!=singleCircularLinkedList.getLast().getNext() || isStart) && nodeValueToBeAdded>=current.getData())
+        {
+            isStart = false;
+            prev = current;
+            current = current.getNext();
+        }
+
+        //First-condition-check
+        if(current == singleCircularLinkedList.getLast().getNext() && !isStart)
+        {
+            newNode.setNext(singleCircularLinkedList.getLast().getNext());
+            singleCircularLinkedList.getLast().setNext(newNode);
+            singleCircularLinkedList.setLast(newNode);
+            incrementListSize();
+            return;
+        }
+
+        //Second-condition-check
+        if(nodeValueToBeAdded<current.getData())
+        {
+            Node next = prev.getNext();
+            prev.setNext(newNode);
+            newNode.setNext(next);
+            incrementListSize();
+        }
+
+        //modify the list pointer
+        if(current == singleCircularLinkedList.getLast())
+        {
+            singleCircularLinkedList.setLast(newNode);
+        }
+
+        return;
     }
 
     private void decrementListSize() {

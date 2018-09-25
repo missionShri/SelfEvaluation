@@ -375,4 +375,100 @@ public class SingleCircularListOpsTest {
 
         Assert.assertEquals(originalSize/2, singleCircularListOps.getSingleCircularLinkedList().getSize());
     }
+
+    // ##### ##### ######
+    //empty/illegal value
+    @Test(expected = IllegalArgumentException.class)
+    public void whenSortedInsertNullNodeThenThrowException()
+    {
+        singleCircularListOps.insertAtEnd(node0);
+        singleCircularListOps.sortedInsert(-1);
+    }
+
+    //insert in Empty list
+    @Test()
+    public void whenSortedInsertEmptyListThenCreateList()
+    {
+        singleCircularListOps.setSingleCircularLinkedList(null);
+        singleCircularListOps.sortedInsert(1);
+
+        SingleCircularListOps.printList(singleCircularListOps.getSingleCircularLinkedList().getLast());
+        System.out.println();
+
+
+        Assert.assertEquals(1, singleCircularListOps.getSingleCircularLinkedList().getSize());
+    }
+
+    //insert in single-element list
+    @Test()
+    public void whenSortedInsertInSingleElementListThenAddAtEnd()
+    {
+        singleCircularListOps.insertAtEnd(node0);
+        singleCircularListOps.sortedInsert(1);
+
+        SingleCircularListOps.printList(singleCircularListOps.getSingleCircularLinkedList().getLast());
+        System.out.println();
+
+        Assert.assertEquals(2, singleCircularListOps.getSingleCircularLinkedList().getSize());
+    }
+
+    //insert at end in the multi-element list
+    @Test()
+    public void whenSortedInsertSmallerListThenAddAtEnd()
+    {
+        singleCircularListOps.insertAtEnd(node0);
+        singleCircularListOps.insertAtEnd(new Node(1));
+        singleCircularListOps.insertAtEnd(new Node(2));
+        singleCircularListOps.insertAtEnd(new Node(3));
+
+        SingleCircularListOps.printList(singleCircularListOps.getSingleCircularLinkedList().getLast());
+        System.out.println();
+
+        singleCircularListOps.sortedInsert(5);
+
+        SingleCircularListOps.printList(singleCircularListOps.getSingleCircularLinkedList().getLast());
+        System.out.println();
+
+        Assert.assertEquals(5, singleCircularListOps.getSingleCircularLinkedList().getSize());
+    }
+
+
+    //insert in middle of multi-element list
+    @Test()
+    public void whenSortedInsertInMiddleListThenAdd()
+    {
+        singleCircularListOps.insertAtEnd(node0);
+        singleCircularListOps.insertAtEnd(new Node(1));
+        singleCircularListOps.insertAtEnd(new Node(8));
+        singleCircularListOps.insertAtEnd(new Node(9));
+
+        SingleCircularListOps.printList(singleCircularListOps.getSingleCircularLinkedList().getLast());
+        System.out.println();
+
+        singleCircularListOps.sortedInsert(6);
+
+        SingleCircularListOps.printList(singleCircularListOps.getSingleCircularLinkedList().getLast());
+        System.out.println();
+
+        Assert.assertEquals(5, singleCircularListOps.getSingleCircularLinkedList().getSize());
+    }
+
+    //insert in middle of multi-element list
+    @Test()
+    public void whenSortedInsertInStartListThenAdd()
+    {
+        singleCircularListOps.insertAtEnd(new Node(1));
+        singleCircularListOps.insertAtEnd(new Node(8));
+        singleCircularListOps.insertAtEnd(new Node(9));
+
+        SingleCircularListOps.printList(singleCircularListOps.getSingleCircularLinkedList().getLast());
+        System.out.println();
+
+        singleCircularListOps.sortedInsert(0);
+
+        SingleCircularListOps.printList(singleCircularListOps.getSingleCircularLinkedList().getLast());
+        System.out.println();
+
+        Assert.assertEquals(4, singleCircularListOps.getSingleCircularLinkedList().getSize());
+    }
 }
