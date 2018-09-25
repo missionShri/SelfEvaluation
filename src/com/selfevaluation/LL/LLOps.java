@@ -13,7 +13,7 @@ public class LLOps {
 
     public LLOps(LinkedList linkedList) {
         this.linkedList = linkedList;
-        if(linkedList!=null)
+        if(this.linkedList!=null)
         {
             this.linkedList.setHead(null);
         }

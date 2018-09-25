@@ -15,7 +15,7 @@ public class SingleCircularListOps {
     public SingleCircularListOps(SingleCircularLinkedList singleCircularLinkedList)
     {
         this.singleCircularLinkedList = singleCircularLinkedList;
-        if(singleCircularLinkedList!=null)
+        if(this.singleCircularLinkedList!=null)
         {
             //Keeping the structure same as single linked list
             this.singleCircularLinkedList.setLast(null);
