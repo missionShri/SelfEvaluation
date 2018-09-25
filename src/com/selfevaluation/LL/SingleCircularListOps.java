@@ -324,6 +324,7 @@ public class SingleCircularListOps {
 
     }
 
+    //More like insertBeforeTheNextGreaterNodeInSortedList
     public void sortedInsert(int nodeValueToBeAdded) {
         if(nodeValueToBeAdded<0)
         {
