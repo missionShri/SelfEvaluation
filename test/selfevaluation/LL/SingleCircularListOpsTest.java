@@ -3,16 +3,17 @@ package selfevaluation.LL;
 import com.selfevaluation.LL.SingleCircularListOps;
 import com.selfevaluation.base.SingleCircularLinkedList;
 import com.selfevaluation.base.SingleCircularLinkedList.Node;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 public class SingleCircularListOpsTest {
 
     SingleCircularListOps singleCircularListOps;
     Node node0;
 
-    @Before
+    @BeforeMethod
     public void setUp()
     {
         singleCircularListOps = new SingleCircularListOps(new SingleCircularLinkedList());
@@ -54,7 +55,7 @@ public class SingleCircularListOpsTest {
     }
 
     //empty
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void whenInsertAtStartInListThenAddNode()
     {
         singleCircularListOps.insertAtEnd(node0);
@@ -102,7 +103,7 @@ public class SingleCircularListOpsTest {
 
     //Insert at start
     //empty
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void whenInvalidInsertionAfterNodeInEmptyListThenThrowException()
     {
         singleCircularListOps.setSingleCircularLinkedList(null);
@@ -110,7 +111,7 @@ public class SingleCircularListOpsTest {
     }
 
     //empty
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void whenInsertAfterNodeInEmptyListThenAddThenThrowException()
     {
         singleCircularListOps.setSingleCircularLinkedList(null);
@@ -120,7 +121,7 @@ public class SingleCircularListOpsTest {
         Assert.assertEquals(2, singleCircularListOps.getSingleCircularLinkedList().getSize());
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expectedExceptions = RuntimeException.class)
     public void whenInsertAfterNonExistantNodeThenThrowException()
     {
         singleCircularListOps.insertAtEnd(node0);
@@ -164,7 +165,7 @@ public class SingleCircularListOpsTest {
 
     //empty list
     //non -existant node
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void whenDeleteFromEmptyListThenThrowException()
     {
         singleCircularListOps.insertAtStart(null);
@@ -172,7 +173,7 @@ public class SingleCircularListOpsTest {
     }
 
     //delete a non-existant node
-    @Test(expected = RuntimeException.class)
+    @Test(expectedExceptions = RuntimeException.class)
     public void whenDeleteNonExistantNodeFromListThenThrowException()
     {
         singleCircularListOps.insertAtStart(node0);
@@ -236,7 +237,7 @@ public class SingleCircularListOpsTest {
 
     //empty list
     //non -existant node
-    @Test(expected = RuntimeException.class)
+    @Test(expectedExceptions = RuntimeException.class)
     public void whenDeleteNodeAtPositionFromEmptyListThenThrowException()
     {
         singleCircularListOps.insertAtStart(null);
@@ -244,7 +245,7 @@ public class SingleCircularListOpsTest {
     }
 
     //delete at illegal node
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void whenDeleteNodeAtIllegalPositionFromListThenThrowException()
     {
         singleCircularListOps.insertAtStart(node0);
@@ -305,7 +306,7 @@ public class SingleCircularListOpsTest {
     }
 
     //delete a non-existant node
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void whenDeleteNodeAtGreaterThanListsizePositionFromListThenThrowException()
     {
         singleCircularListOps.insertAtStart(node0);
@@ -319,7 +320,7 @@ public class SingleCircularListOpsTest {
     //##########
 
     //Empty list
-    @Test(expected = RuntimeException.class)
+    @Test(expectedExceptions = RuntimeException.class)
     public void whenSplitEmptyListThenThrowException()
     {
         singleCircularListOps.getSingleCircularLinkedList().setLast(null);
@@ -378,7 +379,7 @@ public class SingleCircularListOpsTest {
 
     // ##### ##### ######
     //empty/illegal value
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void whenSortedInsertNullNodeThenThrowException()
     {
         singleCircularListOps.insertAtEnd(node0);

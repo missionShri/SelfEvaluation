@@ -24,7 +24,6 @@ public class DoubleLinkedList {
             this.next = null;
             this.previous = null;
         }
-
     }
 
 }

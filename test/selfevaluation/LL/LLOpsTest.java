@@ -3,9 +3,9 @@ package selfevaluation.LL;
 import com.selfevaluation.LL.LLOps;
 import com.selfevaluation.base.LinkedList;
 import com.selfevaluation.base.LinkedList.Node;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 public class LLOpsTest {
 
@@ -23,7 +23,7 @@ public class LLOpsTest {
         - middle
         - last*/
 
-    @Before
+    @BeforeMethod
     public void setup()
     {
         linkedList = new LinkedList();
