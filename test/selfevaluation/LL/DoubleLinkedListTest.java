@@ -685,4 +685,43 @@ public class DoubleLinkedListTest {
         DoubleLinkedListOps.printList(doubleLinkedListOps.getDoubleLinkedList().getHead());
         Assert.assertEquals(3, doubleLinkedListOps.getDoubleLinkedList().getSize());
     }
+
+    // ############
+    //empty list
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void whenReverseEmptyListThenThrowException()
+    {
+        doubleLinkedListOps.setDoubleLinkedList(new DoubleLinkedList());
+        //doubleLinkedListOps.reverse();
+        doubleLinkedListOps.reverseRecursive(doubleLinkedListOps.getDoubleLinkedList().getHead());
+
+    }
+
+    //single element
+    @Test()
+    public void whenReverseSingleListThenReturnListAsIs()
+    {
+        doubleLinkedListOps.insertAtEnd(0);
+
+        //doubleLinkedListOps.reverse();
+        doubleLinkedListOps.reverseRecursive(doubleLinkedListOps.getDoubleLinkedList().getHead());
+
+        DoubleLinkedListOps.printList(doubleLinkedListOps.getDoubleLinkedList().getHead());
+        Assert.assertEquals(1, doubleLinkedListOps.getDoubleLinkedList().getSize());
+    }
+
+    //multi-element
+    @Test()
+    public void whenReverseMultiListThenReturnListAsIs()
+    {
+        doubleLinkedListOps.insertAtEnd(0);
+        doubleLinkedListOps.insertAtEnd(1);
+        doubleLinkedListOps.insertAtEnd(2);
+
+        //doubleLinkedListOps.reverse();
+        doubleLinkedListOps.reverseRecursive(doubleLinkedListOps.getDoubleLinkedList().getHead());
+
+        DoubleLinkedListOps.printList(doubleLinkedListOps.getDoubleLinkedList().getHead());
+        Assert.assertEquals(3, doubleLinkedListOps.getDoubleLinkedList().getSize());
+    }
 }

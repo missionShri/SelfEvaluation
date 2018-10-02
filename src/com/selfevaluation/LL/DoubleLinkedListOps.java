@@ -382,7 +382,7 @@ public class DoubleLinkedListOps {
         return;
     }
 
-    //Wierd-logic than our standard template
+    //Bit-Wierd-logic than our standard template since have to track prevToPrev
     public void deleteNodeBefore(int nodeValueToDeleteBefore) {
         if (doubleLinkedList == null || doubleLinkedList.getHead() == null || nodeValueToDeleteBefore < 0) {
             throw new IllegalArgumentException("Invalid input");
@@ -434,14 +434,14 @@ public class DoubleLinkedListOps {
         }
 
         //Modifying the list pointer, since we just deleted the node pointed to by head pointer
-        if(prev == doubleLinkedList.getHead())
+        if(prev!=null && prev == doubleLinkedList.getHead())
         {
             doubleLinkedList.setHead(current);
         }
         return;
     }
 
-
+    //Bit-Wierd-logic than our standard template since have to track nextToNext
     public void deleteNodeAfter(int nodeValueToDeleteAfter) {
         if(doubleLinkedList == null ||  doubleLinkedList.getHead()==null || nodeValueToDeleteAfter<0)
         {
@@ -481,7 +481,6 @@ public class DoubleLinkedListOps {
             if(next!=null)
             {
                 nextToNext = next.getNext();
-
                 if(nextToNext!=null)
                 {
                     current.setNext(nextToNext);
@@ -496,12 +495,87 @@ public class DoubleLinkedListOps {
             }
         }
 
+        //Modifying the list pointer, since we just deleted the node pointed to by head pointer
         if(doubleLinkedList.getHead() == current)
         {
             //no-op ..since deletion after, no action
         }
 
         return;
+    }
+
+    public void reverse() {
+        if(doubleLinkedList==null || doubleLinkedList.getHead()==null)
+        {
+            throw new IllegalArgumentException("Invalid empty");
+        }
+
+        //single element case
+        if(doubleLinkedList.getHead().getNext()==null)
+        {
+            return;
+        }
+
+        //current = 1st element
+        Node current = doubleLinkedList.getHead();
+        Node prev = current.getPrevious();
+        Node next;
+
+        while (current!=null)
+        {
+            //Manipulation inside the loop unlike other cases since every node gets some treatment
+            next = current.getNext();
+            //prev becomes next
+            current.setNext(prev);
+            //next becomes prev
+            current.setPrevious(next);
+
+            prev = current;
+            current = next;
+        }
+
+        //Modifying the list pointer, since we just deleted the node pointed to by head pointer
+        if(prev!=null)
+        {
+            doubleLinkedList.setHead(prev);
+        }
+
+    }
+
+    public void reverseRecursive(Node node) {
+        if(node==null)
+        {
+            throw new IllegalArgumentException("Invalid input");
+        }
+
+        //single/breaking case for recursion in element list
+        //following our template would have lead us here , but would lead to duplication and we would also missed setNext , setPrev assignments for
+//        if(node.getNext()==null)
+//        {
+//            node.setNext(node.getPrevious());
+//            node.setPrevious(node.getNext());
+//            doubleLinkedList.setHead(node);
+        //               return;
+//        }
+
+          // Breaking condition
+//        //current = 1st element
+//        if(node==null)
+//        {
+//
+//            return;
+//        }
+
+                Node next = node.getNext();
+                node.setNext(node.getPrevious());
+                node.setPrevious(next);
+                if(next==null)
+                {
+                    doubleLinkedList.setHead(node);
+                    return;
+                }
+                reverseRecursive(next);
+
     }
 
     private void incrementListSize() {
