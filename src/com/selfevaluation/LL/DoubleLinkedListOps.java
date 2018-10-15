@@ -590,8 +590,11 @@ public class DoubleLinkedListOps {
                 reverseRecursive(next);
     }
 
-    //for recursive calls , what is a good parameter signature & return type
-    // for recursion, do we split the lists ?
+    //for recursive calls , what is a good parameter signature & return type =>
+    // *** looks like first-last & return the head of result list ****
+
+    // for recursion, do we actually split the lists ? =>
+    // Atleast in this case, ***YES***
 
     //how do we pass in references so that list in JAVA or do we only rely on return types :
         //https://stackoverflow.com/questions/40480/is-java-pass-by-reference-or-pass-by-value?page=1&tab=votes#tab-top
@@ -613,7 +616,7 @@ public class DoubleLinkedListOps {
         }*/
 
         Node halfNext = half.getNext();
-        //break the list in to two halves
+        //*** break the list in to two halves ***
         half.setNext(null);
 
         //Divide & conquer by recursion
@@ -681,7 +684,7 @@ public class DoubleLinkedListOps {
         // that means insertAfter is preferable ...but only insertAfter when the foreign node is > prev and more than current
         // on the other hand insertBefore would be when current is > foreign node ...which implicitly, prev < foreign node
 
-        //lets go with insertBefore , but handling single element cases separately
+        //lets go with ***insertBefore*** , but handling single element cases separately
         //single-element case
         if(first.getNext()==null && second.getNext()==null)
         {
@@ -696,19 +699,23 @@ public class DoubleLinkedListOps {
         }
 
         Node prevFirst,prevSecond;
+        //prev = prevToCurrent
         prevFirst = prevSecond = null;
 
         Node currentFirst, currentSecond;
         currentFirst = currentSecond =null;
 
         //first is the one to which insertBefore is going to happen
+        //Choosing first solely on values of first nodes of either list. The list with greater value, is the one to be insertedBefore , going forward
         if(first.getData()<=second.getData())
         {
+            //current = 1st  element (head)
             currentFirst = second;
             currentSecond = first;
         }
         else
         {
+            //current = 1st  element (head)
             currentFirst = first;
             currentSecond = second;
         }
@@ -716,9 +723,11 @@ public class DoubleLinkedListOps {
         Node head = currentFirst;
         Node secondHead = currentSecond;
 
+        //the different thing about this call is that the node addition/deletion is happening **while looping** & not after the looping is complete as in other cases
+
+        //(current != last->next)
         while (currentFirst!=null && currentSecond!=null)
         {
-
             //if candidate for addition, do insertBefore
             if(currentFirst.getData()>=currentSecond.getData())
             {
@@ -727,7 +736,7 @@ public class DoubleLinkedListOps {
                 Node next = currentSecond.getNext();
                 currentSecond.setNext(currentFirst);
 
-                //adjust prev/next
+                //then transform next/prev of the current list node to start associating to the new node & chopped node
                 if(prevFirst!=null)
                 {
                     prevFirst.setNext(currentSecond);
@@ -745,8 +754,7 @@ public class DoubleLinkedListOps {
                     next.setPrevious(prevSecond);
                 }
 
-
-                //advance pointers
+                //advance pointers & also the list pointers
                 if(prevFirst==null)
                 {
                     prevFirst = currentSecond;
@@ -773,7 +781,7 @@ public class DoubleLinkedListOps {
             }
             else
             {
-                //advance source pointers, not other list
+                //advance source pointers, not other list. Since the aim is to delete the other list
                 prevFirst = currentFirst;
                 //prevSecond = currentSecond;
                 currentFirst = currentFirst.getNext();
@@ -782,12 +790,8 @@ public class DoubleLinkedListOps {
         }
 
         //see if one list is exhausted
-        if(currentSecond==null)
-        {
-            //take prevSecond and finds it right place ??
-            return head;
-        }
 
+        //First-condition-check
         if(currentFirst==null)
         {
             Node tmp =currentSecond;
@@ -798,9 +802,17 @@ public class DoubleLinkedListOps {
                 prevFirst = prevFirst.getNext();
                 tmp = tmp.getNext();
             }
+            //immidiately return rather than holding on to the last
             return head;
         }
 
+        //Second-condition-check
+        if(currentSecond==null)
+        {
+            //take prevSecond and finds it right place ...not needed , since prevSecond shall always be null.
+            //immidiately return rather than holding on to the last
+            return head;
+        }
         return  head;
     }
 
