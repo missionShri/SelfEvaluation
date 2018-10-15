@@ -386,7 +386,7 @@ public class SingleCircularListOpsTest {
         singleCircularListOps.sortedInsert(-1);
     }
 
-    //insert in Empty list
+    //insertInBST in Empty list
     @Test()
     public void whenSortedInsertEmptyListThenCreateList()
     {
@@ -400,7 +400,7 @@ public class SingleCircularListOpsTest {
         Assert.assertEquals(1, singleCircularListOps.getSingleCircularLinkedList().getSize());
     }
 
-    //insert in single-element list
+    //insertInBST in single-element list
     @Test()
     public void whenSortedInsertInSingleElementListThenAddAtEnd()
     {
@@ -413,7 +413,7 @@ public class SingleCircularListOpsTest {
         Assert.assertEquals(2, singleCircularListOps.getSingleCircularLinkedList().getSize());
     }
 
-    //insert at end in the multi-element list
+    //insertInBST at end in the multi-element list
     @Test()
     public void whenSortedInsertSmallerListThenAddAtEnd()
     {
@@ -434,7 +434,7 @@ public class SingleCircularListOpsTest {
     }
 
 
-    //insert in middle of multi-element list
+    //insertInBST in middle of multi-element list
     @Test()
     public void whenSortedInsertInMiddleListThenAdd()
     {
@@ -454,7 +454,7 @@ public class SingleCircularListOpsTest {
         Assert.assertEquals(5, singleCircularListOps.getSingleCircularLinkedList().getSize());
     }
 
-    //insert in middle of multi-element list
+    //insertInBST in middle of multi-element list
     @Test()
     public void whenSortedInsertInStartListThenAdd()
     {

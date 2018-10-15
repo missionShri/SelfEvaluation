@@ -121,7 +121,7 @@ public class LLOpsTest {
 
     //################
     //null list
-    //Adding to it as a feature to insert
+    //Adding to it as a feature to insertInBST
     @Test
     public void whenInsertAtEndOfNullListThenThrowException()
     {

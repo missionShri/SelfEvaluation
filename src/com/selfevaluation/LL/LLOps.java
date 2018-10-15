@@ -21,7 +21,7 @@ public class LLOps {
 
     /* TODO : Insert at start does not need any loop. Only pointer modification.
               Insert in the middle/last does need loop. */
-    /* TODO : Its ok for the container to not exist for insert operations.*/
+    /* TODO : Its ok for the container to not exist for insertInBST operations.*/
     //Time Complexity : O(1)
     public void insertAtFront(Node nodeToBeAdded) {
         if(linkedList == null)
@@ -445,6 +445,7 @@ public class LLOps {
 
     //:::Tricky::: See other variants of this at : https://www.geeksforgeeks.org/merge-two-sorted-linked-lists/
     //Did inplace here
+    //*insertBefore* Current & After Prev is the key
     public Node mergeSortedLists(LinkedList linkedList, LinkedList otherLinkedList) {
         if(linkedList==null && otherLinkedList==null)
         {
@@ -485,8 +486,10 @@ public class LLOps {
         //(current != last->next)
         while (currentFirst!=null && currentSecond!=null)
         {
+            //dont care about prevSecond...just track of currentSecond & update if need be.
             if(currentFirst.getData()<=currentSecond.getData())
             {
+                //insertBefore Current & After Prev is the key
                 prevFirst = currentFirst;
                 currentFirst = currentFirst.getNext();
 
@@ -502,6 +505,8 @@ public class LLOps {
                     currentSecond = nextSecond;
                 }
             }
+
+            // else ? how will nodes advance
         }
 
         //linkedList  is exhausted
@@ -516,6 +521,7 @@ public class LLOps {
 
         return linkedList.getHead();
     }
+
 
     private void incrementListSize() {
         linkedList.setSize(linkedList.getSize()+1);

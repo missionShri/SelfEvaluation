@@ -369,6 +369,7 @@ public class SingleCircularListOps {
         Node prev = singleCircularLinkedList.getLast();
         boolean isStart = true;
 
+        //(current != last->next)
         while ((current!=singleCircularLinkedList.getLast().getNext() || isStart) && nodeValueToBeAdded>=current.getData())
         {
             isStart = false;
