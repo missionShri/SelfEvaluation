@@ -69,7 +69,7 @@ public class DoubleLinkedListOps {
         Node current = doubleLinkedList.getHead();
         Node prev = null;
 
-
+        //(current != last->next)
         while(current!=null  && current.getData() != nodeValueToBeAddedAfter)
         {
             prev = current;
@@ -123,17 +123,20 @@ public class DoubleLinkedListOps {
         Node current = doubleLinkedList.getHead();
         Node prev = null;
 
+        //(current != last->next)
         while (current != null && nodeValueToBeAddedBefore!=current.getData())
         {
             prev = current;
             current = current.getNext();
         }
 
+        //First-condition-check
         if(current == null)
         {
             throw new RuntimeException("Reached the end of list");
         }
 
+        //Second-condition-check
         Node newNode = null;
         if(current.getData() == nodeValueToBeAddedBefore)
         {
@@ -150,6 +153,7 @@ public class DoubleLinkedListOps {
             incrementListSize();
         }
 
+        //DS pointer manipulation
         if(doubleLinkedList.getHead() == current)
         {
             doubleLinkedList.setHead(newNode);
@@ -180,6 +184,7 @@ public class DoubleLinkedListOps {
         Node current = doubleLinkedList.getHead();
         Node prev = null;
 
+        //(current != last->next)
         while (current != null)
         {
             prev  = current;
@@ -197,6 +202,7 @@ public class DoubleLinkedListOps {
             }
         }
 
+        //DS pointer manipulation
         if(doubleLinkedList.getHead() == current)
         {
             doubleLinkedList.setHead(newNode);
@@ -242,12 +248,14 @@ public class DoubleLinkedListOps {
         Node current = doubleLinkedList.getHead();
         Node prev = null;
 
+        //(current != last->next)
         while (current != null)
         {
             prev = current;
             current = current.getNext();
         }
 
+        //First-condition-check
         if(current==null)
         {
             if(prev!=null && prev.getPrevious()!=null)
@@ -278,6 +286,7 @@ public class DoubleLinkedListOps {
         Node current = doubleLinkedList.getHead();
         Node prev = null;
 
+        //(current != last->next)
         while (current!=null && current.getData()!=nodeValueToBeDeleted)
         {
             prev = current;
@@ -339,6 +348,7 @@ public class DoubleLinkedListOps {
         Node prev = null;
         int i =0;
 
+        //(current != last->next)
         while (current!=null && i<position)
         {
             prev = current;
@@ -400,6 +410,7 @@ public class DoubleLinkedListOps {
         //prev is the target
         Node prev = null;
 
+        //(current != last->next)
         while (current != null && current.getData() != nodeValueToDeleteBefore)
         {
             prev = current;
@@ -459,6 +470,7 @@ public class DoubleLinkedListOps {
         Node current = doubleLinkedList.getHead();
         Node prev = null;
 
+        //(current != last->next)
         while (current!=null && current.getData()!=nodeValueToDeleteAfter)
         {
             prev = current;
@@ -521,6 +533,7 @@ public class DoubleLinkedListOps {
         Node prev = current.getPrevious();
         Node next;
 
+        //(current != last->next)
         while (current!=null)
         {
             //Manipulation inside the loop unlike other cases since every node gets some treatment
@@ -575,6 +588,226 @@ public class DoubleLinkedListOps {
                     return;
                 }
                 reverseRecursive(next);
+    }
+
+    //for recursive calls , what is a good parameter signature & return type
+    // for recursion, do we split the lists ?
+
+    //how do we pass in references so that list in JAVA or do we only rely on return types :
+        //https://stackoverflow.com/questions/40480/is-java-pass-by-reference-or-pass-by-value?page=1&tab=votes#tab-top
+
+    public Node mergeSort(Node head, Node last)
+    {
+        //null or 'single-node already' sorted case
+        if(head==null || last==null || head==last)
+        {
+            return head;
+        }
+
+        //divide in to two halves
+        Node half = findHalf(head, last);
+
+        /*if(head!=null && last!=null && half!=null)
+        {
+            System.out.println("\nfor head" + head.getData() + " & last "+ last.getData() + " half is: "+half.getData());
+        }*/
+
+        Node halfNext = half.getNext();
+        //break the list in to two halves
+        half.setNext(null);
+
+        //Divide & conquer by recursion
+        Node first = mergeSort(head, half);
+        Node second = mergeSort(halfNext,last/*,listDetails.get("last")*/);
+
+        //merge sorted arrays back
+        Node mergedListHead =   mergeSortedLists(first, second);
+
+        return mergedListHead;
+    }
+
+    //private Map<String, Node> findHalf(Node head, Node last) {
+    private Node findHalf(Node head, Node last) {
+
+        //since taken care of in the step merge itself
+        if(head==null || last==null /*|| head==last*/)
+        {
+            return null;
+        }
+
+        //current = first element
+        Node current = head;
+        Node half = head;
+        Node prev = null;
+        int  times = 0;
+
+        while (current!=null && current!=last)
+        {
+            //make half node reference, half as fast as current
+            if(times%2==0)
+            {
+                half = half.getNext();
+            }
+            prev = current;
+            current = current.getNext();
+            times++;
+        }
+        //adjust half for odd-length list ...for even number it is ok
+        if(times%2==1 && half!=null && half.getPrevious()!=null)
+        {
+            half = half.getPrevious();
+        }
+
+        return half;
+    }
+
+
+    //
+    public Node mergeSortedLists(Node first, Node second) {
+        if(first == null && second==null)
+        {
+            return null;
+        }
+        if(first==null)
+        {
+            return second;
+        }
+        if(second==null)
+        {
+            return first;
+        }
+
+        //lets not disturb the head of the returning list. so better chose the smaller of the heads as the final list
+        // that means insertAfter is preferable ...but only insertAfter when the foreign node is > prev and more than current
+        // on the other hand insertBefore would be when current is > foreign node ...which implicitly, prev < foreign node
+
+        //lets go with insertBefore , but handling single element cases separately
+        //single-element case
+        if(first.getNext()==null && second.getNext()==null)
+        {
+            if(first.getData()>=second.getData())
+            {
+                return insertBeforeForSingleElement(second,first);
+            }
+            else
+            {
+                return insertBeforeForSingleElement(first, second);
+            }
+        }
+
+        Node prevFirst,prevSecond;
+        prevFirst = prevSecond = null;
+
+        Node currentFirst, currentSecond;
+        currentFirst = currentSecond =null;
+
+        //first is the one to which insertBefore is going to happen
+        if(first.getData()<=second.getData())
+        {
+            currentFirst = second;
+            currentSecond = first;
+        }
+        else
+        {
+            currentFirst = first;
+            currentSecond = second;
+        }
+
+        Node head = currentFirst;
+        Node secondHead = currentSecond;
+
+        while (currentFirst!=null && currentSecond!=null)
+        {
+
+            //if candidate for addition, do insertBefore
+            if(currentFirst.getData()>=currentSecond.getData())
+            {
+                //adjust lose node
+                currentSecond.setPrevious(prevFirst);
+                Node next = currentSecond.getNext();
+                currentSecond.setNext(currentFirst);
+
+                //adjust prev/next
+                if(prevFirst!=null)
+                {
+                    prevFirst.setNext(currentSecond);
+                }
+
+                currentFirst.setPrevious(currentSecond);
+
+                //prev second will always be null...since we are chopping off currentSecond to the first list
+                if(prevSecond!=null)
+                {
+                    prevSecond.setNext(next);
+                }
+                if(next!=null)
+                {
+                    next.setPrevious(prevSecond);
+                }
+
+
+                //advance pointers
+                if(prevFirst==null)
+                {
+                    prevFirst = currentSecond;
+                    head = prevFirst;
+                }
+                else if(prevFirst!=null)
+                {
+                    prevFirst = prevFirst.getNext();
+                }
+                //no need to currentFirst since prevFirst just changed from currentSecond & we want to compare it with new currentSecond
+                //currentFirst = currentFirst;
+
+                if(prevSecond==null)
+                {
+                    currentSecond = next;
+                    secondHead = currentSecond;
+                }
+                else if (prevSecond!=null)
+                {
+                    //no need to move prevSecond, since currentSecond has just moved
+                    //prevSecond = prevSecond;
+                    currentSecond = prevSecond.getNext();
+                }
+            }
+            else
+            {
+                //advance source pointers, not other list
+                prevFirst = currentFirst;
+                //prevSecond = currentSecond;
+                currentFirst = currentFirst.getNext();
+                //currentSecond = currentSecond.getNext();
+            }
+        }
+
+        //see if one list is exhausted
+        if(currentSecond==null)
+        {
+            //take prevSecond and finds it right place ??
+            return head;
+        }
+
+        if(currentFirst==null)
+        {
+            Node tmp =currentSecond;
+            while (tmp!=null)
+            {
+                prevFirst.setNext(tmp);
+                tmp.setPrevious(prevFirst);
+                prevFirst = prevFirst.getNext();
+                tmp = tmp.getNext();
+            }
+            return head;
+        }
+
+        return  head;
+    }
+
+    private Node insertBeforeForSingleElement(Node nodeToBeInserted, Node insertBefore) {
+        insertBefore.setPrevious(nodeToBeInserted);
+        nodeToBeInserted.setNext(insertBefore);
+        return nodeToBeInserted;
 
     }
 
@@ -599,7 +832,7 @@ public class DoubleLinkedListOps {
         }
 
         System.out.println();
-        System.out.println("Priting the list");
+        System.out.println("Priting the DLL list");
 
         Node current = head;
         while (current!=null)
@@ -614,3 +847,207 @@ public class DoubleLinkedListOps {
         }
     }
 }
+
+// ************* ************* ************* *************
+//Options ...how about not changing the pointers/nodes , but just the elemtent
+//           keeping track of head, pivot, last for limiting conditions
+//           how to pass list by reference, so that any mutations are visible in calling class
+//    public void quickSort(Node head, Node pivot) {
+//
+//        if(head==null || pivot==null)
+//        {
+//            //how to distinguish between invalid input and recursion limiting condition
+//            return;
+//        }
+//
+//        //single element case or pivot is the first element
+//        if(head.getNext()==null /*|| head.getNext()==pivot*/)
+//        {
+//            return;
+//        }
+//
+//        //current = first
+//        /*Node current = head;
+//        Node prev = null;
+//        Node pivot = null;
+//
+//        //current != last->next
+//        while (current!=null)
+//        {
+//            prev = current;
+//            current = current.getNext();
+//        }
+//
+//        //first-if-condition-check
+//        if(current==null)
+//        {
+//            pivot = prev;
+//        }*/
+//
+//        System.out.print("\n\nInputs to partition are: "+head.getData()+" "+pivot.getData());
+//        //partition considering the last element as a pivot
+//        Node firstListHead = partition(head, pivot);
+//
+//        Node first = firstListHead;
+//        System.out.print("\nAfter partition, first part\n");
+//        while (first!=null && first!=pivot)
+//        {
+//            System.out.print(first.getData()+"-->");
+//            first = first.getNext();
+//        }
+//
+//        System.out.print("\n pivot"+ pivot.getData());
+//
+//        Node second = pivot.getNext();
+//        System.out.print("\nAfter partition, second part\n");
+//        while (second!=null)
+//        {
+//            System.out.print(second.getData()+"-->");
+//            second = second.getNext();
+//        }
+//
+//        //System.out.print("\n firstListHead" +firstListHead.getData() + "\t" + "pivot" + pivot.getData()+ "\n");
+//        //System.out.print("pivot.next" +pivot.getNext().getData() + "\t" + "last" + last.getData()+ "\n");
+//
+//        if(pivot!=null && pivot.getPrevious()!=null && firstListHead!=null /*&& firstListHead.getData()<pivot.getPrevious().getData()*/)
+//        {
+//            System.out.print("\n\nQS first part with "+firstListHead.getData() +" "+pivot.getPrevious().getData());
+//            quickSort(firstListHead, pivot.getPrevious());
+//        }
+//
+//        Node last  = getLast(doubleLinkedList.getHead());
+//        if(last!=null)
+//        {
+//            System.out.println("\nlast"+last.getData());
+//        }
+//
+//        if(pivot!=null && pivot.getNext()!=null && last!=null && pivot.getNext().getData()<last.getData())
+//        {
+//            System.out.print("\n\nQS second part "+pivot.getNext().getData() +" "+last.getData());
+//            quickSort(pivot.getNext(),last);
+//        }
+//
+//        //any limiting condition to do this , since it was intended for one time use
+//        System.out.println("\nhead setting to "+firstListHead.getData());
+//        doubleLinkedList.setHead(firstListHead);
+//    }
+//
+//
+//    private Node getLast(Node head) {
+//        if(head==null || head.getNext()==null)
+//        {
+//            return null;
+//        }
+//        Node current = head;
+//        Node prev = null;
+//        while(current!=null)
+//        {
+//            prev = current;
+//            current = current.getNext();
+//        }
+//
+//        return prev;
+//    }
+//
+//    private Node partition(Node head, Node pivot) {
+//        if(pivot==null || head==null)
+//        {
+//            return null;
+//        }
+//
+//        //single element case or pivot is the first element
+//        //not sure if this is helpful since list are now splitted in many sbu-lists
+//        /*if(doubleLinkedList.getHead().getNext()==null || pivot == doubleLinkedList.getHead())
+//        {
+//            return null;
+//        }*/
+//
+//        Node current = head;
+//        Node prev = null;
+//        Node next = null;
+//        Node currentLast = pivot;
+//
+//        //current != currentLast->next
+//        while (current!=null && current!=pivot)
+//        {
+//            //important to note if current moved around. since if it did, (next!=null)
+//            next = null;
+//            if(current.getData()>pivot.getData())
+//            {
+//                //dis-engage current
+//                next = current.getNext();
+//                //no need to set it null like next, since its modified per loop-iteration outside of this if
+//                if(prev!=null)
+//                {
+//                    prev.setNext(next);
+//                }
+//
+//                if(next!=null)
+//                {
+//                    next.setPrevious(prev);
+//                }
+//                if(current==head)
+//                {
+//                    head = (prev!=null)?prev:next;
+//                }
+//
+//                //make current as currentLast pointer. currentLast= pivot is only to begin with
+//                currentLast.setNext(current);
+//                current.setPrevious(currentLast);
+//                current.setNext(null);
+//                currentLast = current;
+//
+//                //not sure if this is helpful since list are now splitted in many sbu-lists
+//                /*if(current==head)
+//                {
+//                    //1-element case
+//                    if(next!=null)
+//                    {
+//                        //head = next;
+//                        doubleLinkedList.setHead(next);
+//                    }
+//                }*/
+//            }
+//
+//            if(next!=null)
+//            {
+//                prev = next.getPrevious();
+//                current = next;
+//            }
+//            else //not sure what would be the case with a single element
+//            {
+//                prev = current;
+//                current = current.getNext();
+//            }
+//        }
+//
+//        /*Node firstList = head;
+//        System.out.print("\nfirstList constrained");
+//        while (firstList!=null && firstList!=pivot)
+//        {
+//            System.out.print(firstList.getData() + "\t");
+//            firstList = firstList.getNext();
+//        }
+//
+//        //so we are not really dont have 2 lists until we split the list
+//        firstList = head;
+//        System.out.print("\nfirstList");
+//        while (firstList!=null)
+//        {
+//            System.out.print(firstList.getData() + "\t");
+//            firstList = firstList.getNext();
+//        }
+//
+//        System.out.print("\npivot "+pivot.getData());
+//        System.out.print("\nsecondList");
+//        Node secondList = pivot.getNext();
+//        while (secondList!=null)
+//        {
+//            System.out.print(secondList.getData() + "\t");
+//            secondList = secondList.getNext();
+//        }*/
+//
+//        return head;
+//    }
+
+// ************* ************* ************* *************
