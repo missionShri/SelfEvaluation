@@ -702,6 +702,7 @@ public class DoubleLinkedListOps {
         //prev = prevToCurrent
         prevFirst = prevSecond = null;
 
+        //Rare case where currentFirst and currentSecond are not determined at the start
         Node currentFirst, currentSecond;
         currentFirst = currentSecond =null;
 
@@ -802,7 +803,7 @@ public class DoubleLinkedListOps {
                 prevFirst = prevFirst.getNext();
                 tmp = tmp.getNext();
             }
-            //immidiately return rather than holding on to the last
+            //immediately return rather than holding on to the last
             return head;
         }
 
@@ -820,7 +821,6 @@ public class DoubleLinkedListOps {
         insertBefore.setPrevious(nodeToBeInserted);
         nodeToBeInserted.setNext(insertBefore);
         return nodeToBeInserted;
-
     }
 
     private void incrementListSize() {
