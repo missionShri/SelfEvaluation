@@ -225,6 +225,7 @@ public class DoubleLinkedListOps {
             return;
         }
 
+        //no-looping needed since we have access for the head pointer
         //current = 1st element
         doubleLinkedList.setHead(doubleLinkedList.getHead().getNext());
         doubleLinkedList.getHead().setPrevious(null);
