@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 public class LinkedList {
 
+    //Global pointer
     private Node head;
     //For testing
     private int size = 0;
@@ -16,11 +17,17 @@ public class LinkedList {
     @Getter
     public static class Node {
 
+        //Common
         private int data;
+
+        //As per the DS def
         private Node next;
+
 
         public Node(int data) {
             this.data = data;
+
+            //all pointers are always initialized to null
             this.next = null;
         }
     }

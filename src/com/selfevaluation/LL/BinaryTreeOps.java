@@ -17,6 +17,10 @@ public class BinaryTreeOps {
     public BinaryTreeOps(BinaryTree binaryTree)
     {
         this.binaryTree = binaryTree;
+        if(this.binaryTree!=null)
+        {
+            this.binaryTree.setRoot(null);
+        }
     }
 
     //Need to pass in root , since that is the basis on which we run recursion

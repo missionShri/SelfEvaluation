@@ -1,4 +1,4 @@
-package com.selfevaluation.base;
+package com.selfevaluation.playground;
 
 import lombok.Getter;
 import lombok.Setter;
