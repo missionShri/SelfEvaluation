@@ -25,9 +25,19 @@ public class StackOps {
         //distinguishing between null and empty case here is critical unlike add/delete since we want to check for emptiness
         if(stack==null)
         {
-            throw new  RuntimeException("Stack is null");
+            throw new  RuntimeException("Stack is null or empty");
         }
         return (stack.getTop()==null);
+    }
+
+    public Node peek()
+    {
+        //zero element (null or empty)
+        if(stack==null || isEmpty())
+        {
+            throw new  RuntimeException("Stack is null or empty");
+        }
+        return stack.getTop();
     }
 
     //push

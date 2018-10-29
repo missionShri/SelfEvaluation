@@ -8,6 +8,7 @@ import lombok.Setter;
 public class ArrayStackOps {
 
     public static final int MAX = 100;
+
     //No other DS maintaining required
     int[] stack;
     //top tracks index as opposed to the node as in list implementation
@@ -30,6 +31,18 @@ public class ArrayStackOps {
 
         //top index is the only decider
         return top== (-1);
+    }
+
+    public int peek()
+    {
+        //zero element (null or empty)
+        if(stack==null || isEmpty())
+        {
+            throw new  RuntimeException("Stack is null or empty");
+        }
+
+        return stack[top];
+
     }
 
     //push

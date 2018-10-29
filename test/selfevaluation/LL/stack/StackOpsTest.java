@@ -60,7 +60,7 @@ public class StackOpsTest {
     {
         stackOps.setStack(null);
         stackOps.push(node);
-        Assert.assertEquals(stackOps.getStack().getTop(),node);
+        Assert.assertEquals(stackOps.peek(),node);
         Assert.assertFalse(stackOps.isEmpty());
         Assert.assertEquals(stackOps.getStack().getSize(),1);
     }
@@ -70,7 +70,7 @@ public class StackOpsTest {
     public void whenPushElementToEmptyStackThenAddElement()
     {
         stackOps.push(node);
-        Assert.assertEquals(stackOps.getStack().getTop(),node);
+        Assert.assertEquals(stackOps.peek(),node);
         Assert.assertFalse(stackOps.isEmpty());
         Assert.assertEquals(stackOps.getStack().getSize(),1);
     }
@@ -83,7 +83,7 @@ public class StackOpsTest {
 
         Node node1 = new Node(1);
         stackOps.push(node1);
-        Assert.assertEquals(stackOps.getStack().getTop(),node1);
+        Assert.assertEquals(stackOps.peek(),node1);
         Assert.assertFalse(stackOps.isEmpty());
         Assert.assertEquals(stackOps.getStack().getSize(),2);
     }

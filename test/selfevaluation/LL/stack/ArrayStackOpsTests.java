@@ -56,7 +56,8 @@ public class ArrayStackOpsTests {
 
         Assert.assertFalse(arrayStackOps.isEmpty());
         Assert.assertEquals(arrayStackOps.getTop(),0);
-        Assert.assertEquals(arrayStackOps.getStack()[arrayStackOps.getTop()],element);
+
+        Assert.assertEquals(arrayStackOps.peek(),element);
     }
 
     //push to null or empty(non-null stack with empty top (no-elements stack) which is different from null stack) stack
@@ -67,7 +68,7 @@ public class ArrayStackOpsTests {
 
         Assert.assertFalse(arrayStackOps.isEmpty());
         Assert.assertEquals(arrayStackOps.getTop(),0);
-        Assert.assertEquals(arrayStackOps.getStack()[arrayStackOps.getTop()],element);
+        Assert.assertEquals(arrayStackOps.peek(),element);
     }
 
     //Non-Empty Stack
@@ -79,7 +80,7 @@ public class ArrayStackOpsTests {
 
         Assert.assertFalse(arrayStackOps.isEmpty());
         Assert.assertEquals(arrayStackOps.getTop(),1);
-        Assert.assertEquals(arrayStackOps.getStack()[arrayStackOps.getTop()],2);
+        Assert.assertEquals(arrayStackOps.peek(),2);
     }
 
     //Null Stack
@@ -120,7 +121,7 @@ public class ArrayStackOpsTests {
 
         Assert.assertFalse(arrayStackOps.isEmpty());
         Assert.assertEquals(arrayStackOps.getTop(),0);
-        Assert.assertEquals(arrayStackOps.getStack()[arrayStackOps.getTop()],element);
+        Assert.assertEquals(arrayStackOps.peek(),element);
     }
 
 
