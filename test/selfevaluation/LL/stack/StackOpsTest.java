@@ -1,6 +1,6 @@
-package selfevaluation.LL;
+package selfevaluation.LL.stack;
 
-import com.selfevaluation.LL.StackOps;
+import com.selfevaluation.LL.stack.StackOps;
 import com.selfevaluation.base.Stack;
 import com.selfevaluation.base.Stack.Node;
 import org.testng.Assert;
@@ -9,15 +9,13 @@ import org.testng.annotations.Test;
 
 public class StackOpsTest {
 
-    Stack stack;
     StackOps stackOps;
     Node node;
 
     @BeforeMethod
     public void setup()
     {
-        stack = new Stack();
-        stackOps = new StackOps(stack);
+        stackOps = new StackOps(new Stack());
         node = new Node(0);
     }
 

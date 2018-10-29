@@ -1,4 +1,4 @@
-package com.selfevaluation.LL;
+package com.selfevaluation.LL.stack;
 
 import com.selfevaluation.base.Stack;
 import com.selfevaluation.base.Stack.Node;
@@ -37,8 +37,8 @@ public class StackOps {
             throw new  IllegalArgumentException("Invalid input");
         }
 
-        //Zero-element case
-        if(stack==null || stack.getTop()==null)
+        //Zero-element case (null or empty)
+        if(stack==null || isEmpty())
         {
             if(stack==null)
             {
@@ -70,8 +70,8 @@ public class StackOps {
     }
 
     public Node pop() {
-
-        if(stack==null || stack.getTop()==null)
+        //null or empty
+        if(stack==null || isEmpty())
         {
             throw  new RuntimeException("Stack is null");
         }
@@ -100,7 +100,10 @@ public class StackOps {
 
     private void decrementSize() {
         if(stack==null) return;
-        stack.setSize(stack.getSize()-1);
+        if(stack.getSize()>0)
+        {
+            stack.setSize(stack.getSize()-1);
+        }
     }
 
 }
