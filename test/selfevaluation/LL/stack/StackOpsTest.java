@@ -124,6 +124,7 @@ public class StackOpsTest {
         Node poppedElement = stackOps.pop();
         Assert.assertFalse(stackOps.isEmpty());
         Assert.assertEquals(poppedElement,node1);
+        Assert.assertEquals(stackOps.peek(),node);
         Assert.assertEquals(stackOps.getStack().getSize(),1);
     }
 }
