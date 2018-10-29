@@ -29,10 +29,14 @@ public class SingleCircularListOps {
             throw new IllegalArgumentException("Input is empty.");
         }
 
-        //Zero-element case
+        //Zero-element case (null or empty)
         if (singleCircularLinkedList==null || singleCircularLinkedList.getLast()==null)
         {
-            singleCircularLinkedList = new SingleCircularLinkedList();
+            if(singleCircularLinkedList==null)
+            {
+                singleCircularLinkedList = new SingleCircularLinkedList();
+
+            }
             singleCircularLinkedList.setLast(nodeToBeAdded);
             singleCircularLinkedList.getLast().setNext(nodeToBeAdded);
             incrementListSize();
@@ -66,10 +70,14 @@ public class SingleCircularListOps {
             throw new IllegalArgumentException("Input is empty.");
         }
 
-        //Zero element
+        //Zero element (null or empty)
         if(singleCircularLinkedList==null || singleCircularLinkedList.getLast()==null)
         {
-            singleCircularLinkedList =  new SingleCircularLinkedList();
+            if(singleCircularLinkedList==null)
+            {
+                singleCircularLinkedList = new SingleCircularLinkedList();
+
+            }
             singleCircularLinkedList.setLast(nodeToBeAdded);
             singleCircularLinkedList.getLast().setNext(nodeToBeAdded);
             incrementListSize();
@@ -99,10 +107,14 @@ public class SingleCircularListOps {
             throw new IllegalArgumentException("Input is empty.");
         }
 
-        //Zero element
+        //Zero element (null or empty)
         if(singleCircularLinkedList == null || singleCircularLinkedList.getLast()==null)
         {
-            singleCircularLinkedList = new SingleCircularLinkedList();
+            if(singleCircularLinkedList==null)
+            {
+                singleCircularLinkedList = new SingleCircularLinkedList();
+
+            }
             singleCircularLinkedList.setLast(nodeToBeAdded);
             singleCircularLinkedList.getLast().setNext(nodeToBeAdded);
             incrementListSize();
@@ -158,6 +170,7 @@ public class SingleCircularListOps {
     }
 
     public void deleteNode(int value) {
+        //Null or Empty case
         if(singleCircularLinkedList == null || singleCircularLinkedList.getLast() == null)
         {
             throw new RuntimeException("Empty list");
@@ -211,6 +224,7 @@ public class SingleCircularListOps {
     }
 
     public void deleteNodeAtPosition(int position) {
+        //null or empty
         if(singleCircularLinkedList == null || singleCircularLinkedList.getLast()==null)
         {
             throw new RuntimeException("Invalid input");
@@ -271,6 +285,7 @@ public class SingleCircularListOps {
     }
 
     public void splitInMiddle() {
+        //null or empty
         if(singleCircularLinkedList == null || singleCircularLinkedList.getLast() == null)
         {
             throw new RuntimeException("Invalid input");

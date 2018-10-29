@@ -2,6 +2,7 @@ package com.selfevaluation.LL;
 
 import com.selfevaluation.base.DoubleLinkedList;
 import com.selfevaluation.base.DoubleLinkedList.Node;
+import com.selfevaluation.base.SingleCircularLinkedList;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,10 +30,13 @@ public class DoubleLinkedListOps {
 
         Node newNode = new Node(value);
 
-        //zero-element
+        //zero-element (null or empty)
         if(doubleLinkedList == null || doubleLinkedList.getHead()==null)
         {
-            doubleLinkedList = new DoubleLinkedList();
+            if(doubleLinkedList==null)
+            {
+                doubleLinkedList = new DoubleLinkedList();
+            }
             doubleLinkedList.setHead(newNode);
             //no need to modify next & prev since they are already marked point to null in the DS definition
             incrementListSize();
@@ -55,10 +59,13 @@ public class DoubleLinkedListOps {
             throw new IllegalArgumentException("Invalid entry");
         }
 
-        //zero element
-        if(doubleLinkedList==null || doubleLinkedList.getHead()==null)
+        //zero-element (null or empty)
+        if(doubleLinkedList == null || doubleLinkedList.getHead()==null)
         {
-            doubleLinkedList = new DoubleLinkedList();
+            if(doubleLinkedList==null)
+            {
+                doubleLinkedList = new DoubleLinkedList();
+            }
             Node newNode = new Node(nodeValueToBeAdded);
             doubleLinkedList.setHead(newNode);
             incrementListSize();
@@ -107,13 +114,16 @@ public class DoubleLinkedListOps {
             throw new IllegalArgumentException("Invalid input");
         }
 
-        //zero element
-        if(doubleLinkedList == null || doubleLinkedList.getHead() == null)
+        //zero-element (null or empty)
+        if(doubleLinkedList == null || doubleLinkedList.getHead()==null)
         {
+            if(doubleLinkedList==null)
+            {
+                doubleLinkedList = new DoubleLinkedList();
+            }
             Node newNode = new Node(nodeValueToBeAdded);
             newNode.setPrevious(null);
             newNode.setNext(null);
-            doubleLinkedList =  new DoubleLinkedList();
             doubleLinkedList.setHead(newNode);
             incrementListSize();
             return;
@@ -169,10 +179,13 @@ public class DoubleLinkedListOps {
 
         Node newNode = new Node(nodeValueToBeAdded);
 
-        //zero-element case
-        if(doubleLinkedList==null || doubleLinkedList.getHead()==null)
+        //zero-element (null or empty)
+        if(doubleLinkedList == null || doubleLinkedList.getHead()==null)
         {
-            doubleLinkedList =  new DoubleLinkedList();
+            if(doubleLinkedList==null)
+            {
+                doubleLinkedList = new DoubleLinkedList();
+            }
             newNode.setNext(null);
             newNode.setPrevious(null);
             doubleLinkedList.setHead(newNode);
@@ -212,6 +225,7 @@ public class DoubleLinkedListOps {
 
 
     public void deleteFirstNode() {
+        //null or empty
         if(doubleLinkedList == null || doubleLinkedList.getHead()==null)
         {
             throw new RuntimeException("Empty list");
@@ -234,6 +248,7 @@ public class DoubleLinkedListOps {
     }
 
     public void deleteLastNode() {
+        //null or empty
         if (doubleLinkedList == null || doubleLinkedList.getHead() == null) {
             throw new RuntimeException("Empty list");
         }
@@ -270,6 +285,7 @@ public class DoubleLinkedListOps {
 
 
     public void deleteNode(int nodeValueToBeDeleted) {
+        //null or empty
         if(doubleLinkedList == null || doubleLinkedList.getHead()==null || nodeValueToBeDeleted<0)
         {
             throw  new IllegalArgumentException("Invalid input");
@@ -331,6 +347,7 @@ public class DoubleLinkedListOps {
     }
 
     public void deleteNodeAtPositon(int position) {
+        //null or empty
         if(doubleLinkedList == null || doubleLinkedList.getHead()==null || position<0)
         {
             throw  new IllegalArgumentException("Invalid input");
@@ -395,6 +412,7 @@ public class DoubleLinkedListOps {
 
     //Bit-Wierd-logic than our standard template since have to track prevToPrev
     public void deleteNodeBefore(int nodeValueToDeleteBefore) {
+        //null or empty
         if (doubleLinkedList == null || doubleLinkedList.getHead() == null || nodeValueToDeleteBefore < 0) {
             throw new IllegalArgumentException("Invalid input");
         }
@@ -455,6 +473,7 @@ public class DoubleLinkedListOps {
 
     //Bit-Wierd-logic than our standard template since have to track nextToNext
     public void deleteNodeAfter(int nodeValueToDeleteAfter) {
+        //null or empty
         if(doubleLinkedList == null ||  doubleLinkedList.getHead()==null || nodeValueToDeleteAfter<0)
         {
             throw new IllegalArgumentException("Invalid input");
@@ -518,6 +537,7 @@ public class DoubleLinkedListOps {
     }
 
     public void reverse() {
+        //null or empty
         if(doubleLinkedList==null || doubleLinkedList.getHead()==null)
         {
             throw new IllegalArgumentException("Invalid empty");

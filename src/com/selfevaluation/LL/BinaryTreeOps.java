@@ -33,6 +33,7 @@ public class BinaryTreeOps {
         }
 
         //zero-element case . root parameter does not matter
+        // null or empty
         if(binaryTree==null || binaryTree.getRoot()==null)
         {
             binaryTree = new BinaryTree();

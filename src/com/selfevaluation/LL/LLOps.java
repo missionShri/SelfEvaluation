@@ -46,10 +46,14 @@ public class LLOps {
             throw new IllegalArgumentException("Input is empty");
         }
 
-        //Zero-element case
-        if (linkedList == null)
+        //Zero-element case (null or empty)
+        if (linkedList == null || linkedList.getHead()==null)
         {
-            linkedList =  new LinkedList();
+            if(linkedList==null)
+            {
+                linkedList =  new LinkedList();
+            }
+
             linkedList.setHead(nodeToBeAdded);
             incrementListSize();
             return;
@@ -113,10 +117,13 @@ public class LLOps {
             throw new IllegalArgumentException("Input is empty");
         }
 
-        //zero-element case
-        if(linkedList == null)
+        //zero-element case (null or empty)
+        if(linkedList == null || linkedList.getHead()==null)
         {
-            linkedList =  new LinkedList();
+            if(linkedList==null)
+            {
+                linkedList =  new LinkedList();
+            }
             linkedList.setHead(nodeToBeAdded);
             incrementListSize();
             return;
@@ -166,6 +173,7 @@ public class LLOps {
     }
 
     public void delete(int value) {
+        //null or empty
         if (linkedList == null || linkedList.getHead()==null || value < 0) {
             throw new RuntimeException("Input is empty");
         }
@@ -246,6 +254,7 @@ public class LLOps {
 
     //TODO: Got simpler due to logic as prescribed at https://www.geeksforgeeks.org/linked-list-set-3-deleting-node/
     public void deleteAtPosition(int position) {
+        //null or empty
         if (linkedList == null || linkedList.getHead()==null || position < 0) {
             throw new RuntimeException("Input is invalid");
         }
