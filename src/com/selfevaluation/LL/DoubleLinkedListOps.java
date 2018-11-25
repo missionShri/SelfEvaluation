@@ -59,7 +59,7 @@ public class DoubleLinkedListOps {
             throw new IllegalArgumentException("Invalid entry");
         }
 
-        //zero-element (null or empty)
+            //zero-element (null or empty)
         if(doubleLinkedList == null || doubleLinkedList.getHead()==null)
         {
             if(doubleLinkedList==null)
