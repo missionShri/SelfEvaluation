@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Playground {
 
@@ -23,6 +24,9 @@ public class Playground {
         list.add("test");
         bar(list);
         System.out.println("list.size()" +list.size());;*/
+
+        Optional<Integer> test = Optional.empty();
+        System.out.println(test.isPresent());
     }
 
     private static void bar(List list) {
