@@ -584,43 +584,151 @@ public class StackOpsTest {
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void whenNullInputPushingToStackUsingTwoQueuesThenThrowException()
     {
-        stackOps.pushUsingTwoQueues(null);
+        stackOps.pushUsingTwoQueues(null, null);
     }
 
     @Test()
     public void whenPushingToStackUsingTwoQueuesToEmptyStackThenAddElement()
     {
-        stackOps.pushUsingTwoQueues(node);
+        stackOps.pushUsingTwoQueues(node,stackOps.getAuxStack());
     }
 
     @Test()
     public void whenPushingToStackUsingTwoQueuesToNonEmptyStackThenAddElement()
     {
-        stackOps.pushUsingTwoQueues(node);
-        stackOps.pushUsingTwoQueues(new Node(1));
+        stackOps.pushUsingTwoQueues(node,stackOps.getAuxStack());
+        stackOps.pushUsingTwoQueues(new Node(1),stackOps.getAuxStack());
     }
 
     @Test(expectedExceptions = RuntimeException.class)
     public void whenPopToStackUsingTwoQueuesToEmptyStackThenThrowException()
     {
-        stackOps.popUsingTwoQueues();
+        stackOps.popUsingTwoQueues(stackOps.getAuxStack());
     }
 
     @Test()
     public void whenPopToStackUsingTwoQueuesToSingleStackThenPopElement()
     {
-        stackOps.pushUsingTwoQueues(node);
-        stackOps.popUsingTwoQueues();
+        stackOps.pushUsingTwoQueues(node,stackOps.getAuxStack());
+        stackOps.popUsingTwoQueues(stackOps.getAuxStack());
     }
 
     @Test()
     public void whenPopToStackUsingTwoQueuesToNonSingleStackThenPopElement()
     {
-        stackOps.pushUsingTwoQueues(node);
-        stackOps.pushUsingTwoQueues(new Node(1));
-        stackOps.pushUsingTwoQueues(new Node(2));
+        stackOps.pushUsingTwoQueues(node,stackOps.getAuxStack());
+        stackOps.pushUsingTwoQueues(new Node(1),stackOps.getAuxStack());
+        stackOps.pushUsingTwoQueues(new Node(2),stackOps.getAuxStack());
 
-        Assert.assertEquals(stackOps.popUsingTwoQueues().getData(),2);
-        Assert.assertEquals(stackOps.popUsingTwoQueues().getData(),1);
+        Assert.assertEquals(stackOps.popUsingTwoQueues(stackOps.getAuxStack()).getData(),2);
+        Assert.assertEquals(stackOps.popUsingTwoQueues(stackOps.getAuxStack()).getData(),1);
     }
+
+    // ########### ########### ########### ###########
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void whenPushNullInputToPushTrackingMiddleElementThenThrowException()
+    {
+        stackOps.pushTrackingMiddleElement(null,stackOps.getStack());
+    }
+
+    @Test()
+    public void whenPushInputToEmptyPushTrackingMiddleElementThenAddElement()
+    {
+        stackOps.pushTrackingMiddleElement(node,stackOps.getStack());
+        Assert.assertEquals(stackOps.getDoubleLinkedListOps().getDoubleLinkedList().getHead().getData(),node.getData());
+    }
+
+    @Test()
+    public void whenPushInputToNonEmptyPushTrackingMiddleElementThenAddElement()
+    {
+        stackOps.pushTrackingMiddleElement(node,stackOps.getStack());
+        stackOps.pushTrackingMiddleElement(new Node(1),stackOps.getStack());
+        stackOps.pushTrackingMiddleElement(new Node(2),stackOps.getStack());
+        Assert.assertEquals(stackOps.getDoubleLinkedListOps().getDoubleLinkedList().getHead().getData(),2);
+    }
+
+    @Test(expectedExceptions = RuntimeException.class)
+    public void whenFindMiddleInNullStackThenThrowException()
+    {
+        Assert.assertEquals(stackOps.findMiddle(), 0);
+    }
+
+    @Test()
+    public void whenFindMiddleInSingleElementStackThenGetMiddle()
+    {
+        stackOps.pushTrackingMiddleElement(node,stackOps.getStack());
+        Assert.assertEquals(stackOps.findMiddle(), 0);
+    }
+
+    @Test()
+    public void whenFindMiddleInNonSingleElementStackThenGetMiddle()
+    {
+        stackOps.pushTrackingMiddleElement(node,stackOps.getStack());
+        stackOps.pushTrackingMiddleElement(new Node(1),stackOps.getStack());
+        stackOps.pushTrackingMiddleElement(new Node(2),stackOps.getStack());
+        stackOps.pushTrackingMiddleElement(new Node(3),stackOps.getStack());
+        stackOps.pushTrackingMiddleElement(new Node(4),stackOps.getStack());
+        Assert.assertEquals(stackOps.findMiddle(), 2);
+    }
+
+    // ########### ########### ########### ###########
+
+    @Test(expectedExceptions = RuntimeException.class)
+    public void whenPopTrackingMiddleElementStackFromEmptyStackThenThrowException()
+    {
+        stackOps.popTrackingMiddleElement();
+    }
+
+    @Test()
+    public void whenPopTrackingMiddleElementStackFromSingleStackThenReturnElement()
+    {
+        stackOps.pushTrackingMiddleElement(node,stackOps.getStack());
+        Assert.assertEquals(stackOps.popTrackingMiddleElement(),node.getData());
+        Assert.assertEquals(stackOps.getDoubleLinkedListOps().getDoubleLinkedList().getSize(),0);
+        Assert.assertNull(stackOps.getMiddle());
+    }
+
+    @Test()
+    public void whenPopTrackingMiddleElementStackFromStackThenReturnElement()
+    {
+        stackOps.pushTrackingMiddleElement(node,stackOps.getStack());
+        stackOps.pushTrackingMiddleElement(new Node(1),stackOps.getStack());
+        stackOps.pushTrackingMiddleElement(new Node(2),stackOps.getStack());
+        stackOps.pushTrackingMiddleElement(new Node(3),stackOps.getStack());
+        stackOps.pushTrackingMiddleElement(new Node(4),stackOps.getStack());
+        Assert.assertEquals(stackOps.popTrackingMiddleElement(),4);
+    }
+
+    // ########### ########### ########### ###########
+
+    @Test(expectedExceptions = RuntimeException.class)
+    public void whenDeleteMiddleElementFromEmptyStackThenThrowException()
+    {
+        stackOps.deleteMiddle();
+    }
+
+    @Test()
+    public void whenDeleteMiddleFromSingleStackThenReturnElement()
+    {
+        stackOps.pushTrackingMiddleElement(node,stackOps.getStack());
+        Assert.assertEquals(stackOps.deleteMiddle(),node.getData());
+        Assert.assertEquals(stackOps.getDoubleLinkedListOps().getDoubleLinkedList().getSize(),0);
+        Assert.assertNull(stackOps.getMiddle());
+    }
+
+    @Test()
+    public void whenDeleteMiddleFromMiddleElementFromStackThenReturnElement()
+    {
+        stackOps.pushTrackingMiddleElement(node,stackOps.getStack());
+        stackOps.pushTrackingMiddleElement(new Node(1),stackOps.getStack());
+        stackOps.pushTrackingMiddleElement(new Node(2),stackOps.getStack());
+        stackOps.pushTrackingMiddleElement(new Node(3),stackOps.getStack());
+        stackOps.pushTrackingMiddleElement(new Node(4),stackOps.getStack());
+        Assert.assertEquals(stackOps.deleteMiddle(),2);
+        Assert.assertEquals(stackOps.getDoubleLinkedListOps().getDoubleLinkedList().getSize(),4);
+    }
+
+    // ########### ########### ########### ###########
+
 }

@@ -1,5 +1,7 @@
 package com.selfevaluation.LL.stack;
 
+import com.selfevaluation.LL.DoubleLinkedListOps;
+import com.selfevaluation.base.DoubleLinkedList;
 import com.selfevaluation.base.LinkedList;
 import com.selfevaluation.base.Stack;
 import com.selfevaluation.base.Stack.Node;
@@ -15,7 +17,6 @@ import java.util.Optional;
 @Getter
 public class StackOps {
 
-    @Getter
     private Stack stack;
 
     private int top1, top2;
@@ -23,6 +24,10 @@ public class StackOps {
 
     private List<Node> queue1, queue2;
     private Stack minStack;
+    private DoubleLinkedListOps doubleLinkedListOps;
+    private DoubleLinkedList.Node middle;
+
+    @Getter
     private Stack auxStack;
 
     public StackOps(Stack stack)
@@ -119,60 +124,6 @@ public class StackOps {
         stack.setTop(current.getNext());
         decrementSize();
         return current;
-    }
-
-    public void pushUsingTwoQueues(Node node) {
-        if(node==null)
-        {
-            throw new IllegalArgumentException("Invalid input");
-        }
-
-        //Zero-or empty stack
-        if(auxStack==null /*|| isEmpty(stackToPushTo)*/) {
-
-                auxStack = new Stack();
-                queue1 = new java.util.LinkedList();
-                queue2 = new java.util.LinkedList();
-
-            /* //the point is not to directly push to a stack but using two queues
-            queue1.add(node);
-            //no need to set any stack pointers, since we are simulating using queues */
-        }
-
-        //the point is not to directly push to a stack but using two queues
-        queue1.add(node);
-        //no need to set any stack pointers, since we are simulating using queues
-    }
-
-    public Node popUsingTwoQueues() {
-        Node node = null;
-        if(queue1==null || queue1.size()==0)
-        {
-            throw  new RuntimeException("Stack is null or empty");
-        }
-
-        //Single element case
-        if(queue1.size()==1)
-        {
-            return  queue1.get(0);
-        }
-
-        /* Move all but the last element to the other queue
-           Also much better than looping in a for-loop on a size-decreasing list resulting in to concurrentModificationException
-           and also since size is decreasing, just i++ will cause you to skip elements */
-        do {
-            queue2.add(queue1.remove(0));
-        }while (queue1.size()>1);
-
-        //return the only element left in queue1
-        node =  queue1.remove(0);
-
-        //Critical else, you would have to keep track of which queue is has elements and which one is aux
-        List tmp = queue2;
-        queue2 = queue1;
-        queue1 = tmp;
-
-        return node;
     }
 
         //Using extra-space since its a string
@@ -624,9 +575,67 @@ public class StackOps {
         return postFix.toString();
     }
 
+    //Tricky
+    public void pushUsingTwoQueues(Node node,Stack auxStack) {
+        if(node==null)
+        {
+            throw new IllegalArgumentException("Invalid input");
+        }
+
+        //Zero-or empty stack
+        if(auxStack==null /*|| isEmpty(stackToPushTo)*/) {
+
+            auxStack = new Stack();
+            setAuxStack(auxStack);
+            queue1 = new java.util.LinkedList();
+            queue2 = new java.util.LinkedList();
+
+            /* //the point is not to directly push to a stack but using two queues
+            queue1.add(node);
+            //no need to set any stack pointers, since we are simulating using queues */
+        }
+
+        //the point is not to directly push to a stack but using two queues
+        queue1.add(node);
+        //no need to set any stack pointers, since we are simulating using queues
+    }
+
+    //Tricky
+    public Node popUsingTwoQueues(Stack auxStack) {
+        if(queue1==null || queue1.size()==0)
+        {
+            throw  new RuntimeException("Stack is null or empty");
+        }
+
+        //Single element case
+        if(queue1.size()==1)
+        {
+            return queue1.remove(0);
+        }
+
+        /* Move all but the last element to the other queue
+           Also much better than looping in a for-loop on a size-decreasing list resulting in to concurrentModificationException
+           and also since size is decreasing, just i++ will cause you to skip elements */
+        do {
+            queue2.add(queue1.remove(0));
+        }while (queue1.size()>1);
+
+        //return the only element left in queue1
+        Node node =  queue1.remove(0);
+
+        //Critical else, you would have to keep track of which queue is has elements and which one is aux
+        List tmp = queue2;
+        queue2 = queue1;
+        queue1 = tmp;
+
+        return node;
+    }
+
+    //Tricky
     /* Special DS -> Maintain two stacks in order to support getMin in O(1) time.
        If something is needed in constant time, its a given we need extra space to support O(1) constraint.
-       Also only push to the minStack only when there is an update to the newMin. Will help in space savings */
+       Also only push to the minStack only when there is an update to the newMin. Will help in space savings as
+       compared to 1-element corresponding to each stack element */
     public void pushKeepingTrackOfMin(Node node)
     {
         //null
@@ -646,6 +655,8 @@ public class StackOps {
             stack.setTop(node);
             incrementSize();
 
+            /* Need to keep this stack, since need to support getMin in O(1) time.
+              Else we could have popped out remaining elements, found min and then pushed them back */
             minStack = new Stack();
             minStack.setTop(node);
 
@@ -657,6 +668,7 @@ public class StackOps {
         node.setNext(top);
         stack.setTop(node);
 
+        //Only update min, when there is a lesser element recorded. Not a min, for every stack element
         if(minStack.getTop().getData()>node.getData())
         {
             //other cases
@@ -666,6 +678,7 @@ public class StackOps {
         }
     }
 
+    //Tricky
     /* Special DS -> Maintain two stacks in order to support getMin in O(1) time.
        If something is needed in constant time, its a given we need extra space to support O(1) constraint.
        While popping from primary stack, only pop the minStack when element being popped is equal to the current min-stack top. */
@@ -702,7 +715,7 @@ public class StackOps {
             {
                 throw new Exception("Tracking Stack is null");
             }
-            else if(minStack.getTop().getData()==top.getData())
+             else if(minStack.getTop().getData()==top.getData())
             {
                 //other cases
                 minStack.setTop(null);
@@ -715,6 +728,7 @@ public class StackOps {
         decrementSize();
         stack.setTop(top.getNext());
 
+        //Only update min, when there is a lesser element recorded. Not a min, for every stack element
         if(minStack.getTop().getData()==top.getData())
         {
             //other cases
@@ -723,6 +737,119 @@ public class StackOps {
         return top;
     }
 
+    //Tricky
+     /* Special DS -> Maintain two stacks in order to support getMiddle in O(1) time.
+     If something is needed in constant time, its a given we need extra space to support O(1) constraint.
+
+     Aux stack -> on every push to main stack, corresponding entry in aux stack -> might need some pop-push cycles to find the mid (which is now buried under) & similarly for deletion
+     Aux array -> O(1) findMin random access, but deletion wont be in O(1) since shifting would be needed
+     Stack as DLL -> O(1) findMin by keeping track of middle element while pushing. Pointer adjustment around deleteMin
+     */
+    public void pushTrackingMiddleElement(Node node, Stack stack)
+    {
+        if(node==null)
+        {
+            throw new IllegalArgumentException("Invalid input");
+        }
+
+        //Zero element/ empty stack case
+        //if(stack == null || isEmpty(stack))
+        if(doubleLinkedListOps==null || doubleLinkedListOps.getDoubleLinkedList()==null)
+        {
+            doubleLinkedListOps = new DoubleLinkedListOps(new DoubleLinkedList());
+            //to simulate stack (LIFO) ...push and pop happen at head node in O(1) time
+            doubleLinkedListOps.insertAtFront(node.getData());
+            //only element case
+            middle = doubleLinkedListOps.getDoubleLinkedList().getHead();
+            return;
+        }
+
+        //to simulate stack (LIFO) ...push and pop happen at head node in O(1) time
+        doubleLinkedListOps.insertAtFront(node.getData());
+
+        //since insertion is at the start, list is expanding to the left. So mid will move left (prev)
+        //*** IMPORTANT ***
+        if(doubleLinkedListOps.getDoubleLinkedList().getSize()%2 != 0)
+        {
+            middle = middle.getPrevious();
+        }
+        return;
+    }
+
+    public int findMiddle()
+    {
+        if(doubleLinkedListOps==null || doubleLinkedListOps.getDoubleLinkedList()==null)
+        {
+            throw new RuntimeException("Stack is null");
+        }
+        return middle.getData();
+    }
+
+    public int deleteMiddle()
+    {
+        int data = -1;
+        if(doubleLinkedListOps==null ||  doubleLinkedListOps.getDoubleLinkedList()==null)
+        {
+            throw new RuntimeException("Stack is null");
+        }
+
+        //Single element case
+        if(doubleLinkedListOps.getDoubleLinkedList().getSize()==1)
+        {
+            //to simulate stack (LIFO) ...push and pop happen at head node in O(1) time
+            data = middle.getData();
+            //assuming no duplicates
+            doubleLinkedListOps.deleteNode(data);
+
+            middle = null;
+            return data;
+        }
+
+        //to simulate stack (LIFO) ...push and pop happen at head node in O(1) time
+        data = middle.getData();
+        //assuming no duplicates
+        doubleLinkedListOps.deleteNode(data);
+
+        if(doubleLinkedListOps.getDoubleLinkedList().getSize()%2 != 0)
+        {
+            middle = middle.getNext();
+        }
+
+        return data;
+    }
+
+    public int popTrackingMiddleElement()
+    {
+        if(doubleLinkedListOps==null || doubleLinkedListOps.getDoubleLinkedList()==null)
+        {
+            throw new RuntimeException("Stack is null");
+        }
+
+        //Single element case
+        if(doubleLinkedListOps.getDoubleLinkedList().getSize()==1)
+        {
+            //to simulate stack (LIFO) ...push and pop happen at head node in O(1) time
+            int data = doubleLinkedListOps.getDoubleLinkedList().getHead().getData();
+            doubleLinkedListOps.deleteFirstNode();
+
+            middle = null;
+            return data;
+        }
+
+        //to simulate stack (LIFO) ...push and pop happen at head node in O(1) time
+        int data = doubleLinkedListOps.getDoubleLinkedList().getHead().getData();
+        doubleLinkedListOps.deleteFirstNode();
+
+        //since deletion is at the start, list is contracting from the left. So mid will move right (next)
+        //*** IMPORTANT ***
+        if(doubleLinkedListOps.getDoubleLinkedList().getSize()%2 != 0)
+        {
+            middle = middle.getNext();
+        }
+        return data;
+    }
+
+    //Tricky
     //operand case (assuming limited operator support)
     private boolean isInputPrecedenceGreaterThanStackTop(char token) {
          boolean isInputPrecedenceGreater = false;

@@ -44,8 +44,12 @@ public class DoubleLinkedListOps {
         }
 
         //no-looping needed since we have access for the head pointer
+
+        //first perform manipulation on the free-node, to let it take shape of the list pointer
         newNode.setNext(doubleLinkedList.getHead());
         newNode.setPrevious(doubleLinkedList.getHead().getPrevious());
+
+        //then transform next/prev of the current list node to start associating to the new node
         doubleLinkedList.getHead().setPrevious(newNode);
         doubleLinkedList.setHead(newNode);
         incrementListSize();
@@ -282,7 +286,6 @@ public class DoubleLinkedListOps {
             }
         }
     }
-
 
     public void deleteNode(int nodeValueToBeDeleted) {
         //null or empty
@@ -844,14 +847,14 @@ public class DoubleLinkedListOps {
         return nodeToBeInserted;
     }
 
-    private void incrementListSize() {
+    public void incrementListSize() {
         if(doubleLinkedList!=null)
         {
             doubleLinkedList.setSize(doubleLinkedList.getSize()+1);
         }
     }
 
-    private void decrementListSize() {
+    public void decrementListSize() {
         if(doubleLinkedList!=null)
         {
             doubleLinkedList.setSize(doubleLinkedList.getSize()-1);
