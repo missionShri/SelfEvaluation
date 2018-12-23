@@ -344,7 +344,7 @@ public class LLOps {
         return findListSizeRecursively(current.getNext(),++i);
     }
 
-    //:::Tricky:::
+    //TODO: :::Tricky:::
     public boolean swapElements(int element1, int element2) {
 
         if(linkedList == null || element1<0 || element2<0)
@@ -452,7 +452,7 @@ public class LLOps {
         return true;
     }
 
-    //:::Tricky::: See other variants of this at : https://www.geeksforgeeks.org/merge-two-sorted-linked-lists/
+    //TODO: :::Tricky::: See other variants of this at : https://www.geeksforgeeks.org/merge-two-sorted-linked-lists/
     //Did inplace here
     //*insertBefore* Current & After Prev is the key
     public Node mergeSortedLists(LinkedList linkedList, LinkedList otherLinkedList) {

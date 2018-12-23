@@ -257,6 +257,7 @@ public class StackOps {
         return element;
     }
 
+    //TODO : Tricky
     public boolean isMisMatch(String input)
     {
         int bracketOpenCount = 0;
@@ -349,7 +350,7 @@ public class StackOps {
         return nextGreaterElements;
     }
 
-    //Tricky
+    //TODO: Tricky
     public int evaluatePostfix(String postFixExp)
     {
         //null or empty
@@ -461,7 +462,7 @@ public class StackOps {
         return value;
     }
 
-    //Tricky
+    //TODO: Tricky
     public String infixToPostfix(String infixExp)
     {
         //null or empty
@@ -575,7 +576,7 @@ public class StackOps {
         return postFix.toString();
     }
 
-    //Tricky
+    //TODO: Tricky
     public void pushUsingTwoQueues(Node node,Stack auxStack) {
         if(node==null)
         {
@@ -600,7 +601,7 @@ public class StackOps {
         //no need to set any stack pointers, since we are simulating using queues
     }
 
-    //Tricky
+    //TODO: Tricky
     public Node popUsingTwoQueues(Stack auxStack) {
         if(queue1==null || queue1.size()==0)
         {
@@ -631,7 +632,7 @@ public class StackOps {
         return node;
     }
 
-    //Tricky
+    //TODO: Tricky
     /* Special DS -> Maintain two stacks in order to support getMin in O(1) time.
        If something is needed in constant time, its a given we need extra space to support O(1) constraint.
        Also only push to the minStack only when there is an update to the newMin. Will help in space savings as
@@ -678,7 +679,7 @@ public class StackOps {
         }
     }
 
-    //Tricky
+    //TODO: Tricky
     /* Special DS -> Maintain two stacks in order to support getMin in O(1) time.
        If something is needed in constant time, its a given we need extra space to support O(1) constraint.
        While popping from primary stack, only pop the minStack when element being popped is equal to the current min-stack top. */
@@ -737,7 +738,7 @@ public class StackOps {
         return top;
     }
 
-    //Tricky
+    //TODO: Tricky
      /* Special DS -> Maintain two stacks in order to support getMiddle in O(1) time.
      If something is needed in constant time, its a given we need extra space to support O(1) constraint.
 
@@ -849,7 +850,7 @@ public class StackOps {
         return data;
     }
 
-    //Tricky
+    //TODO: Tricky
     //operand case (assuming limited operator support)
     private boolean isInputPrecedenceGreaterThanStackTop(char token) {
          boolean isInputPrecedenceGreater = false;
