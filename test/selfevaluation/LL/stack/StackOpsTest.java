@@ -1,14 +1,11 @@
 package selfevaluation.LL.stack;
 
-import com.selfevaluation.LL.stack.OperationName;
 import com.selfevaluation.LL.stack.StackOps;
 import com.selfevaluation.base.Stack;
 import com.selfevaluation.base.Stack.Node;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import java.util.Optional;
 
 public class StackOpsTest {
 
@@ -32,29 +29,29 @@ public class StackOpsTest {
     public void whenStackIsNullThenThrowException()
     {
         stackOps.setStack(null);
-        stackOps.isEmpty(stackOps.getStack());
+        stackOps.isEmpty();
     }
 
     //non-null but empty(non-null stack with empty top (no-elements stack) which is different from null stack) stack
     @Test
     public void whenStackIsEmptyThenReturnTrue()
     {
-        Assert.assertTrue(stackOps.isEmpty(stackOps.getStack()));
+        Assert.assertTrue(stackOps.isEmpty());
     }
 
     //isEmpty on non-null non-empty stack
     @Test
     public void whenStackIsNonEmptyThenReturnFalse()
     {
-        stackOps.push(node,stackOps.getStack());
-        Assert.assertFalse(stackOps.isEmpty(stackOps.getStack()));
+        stackOps.push(node);
+        Assert.assertFalse(stackOps.isEmpty());
     }
 
     //push null element
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void whenPushNullElementToStackThenThrowException()
     {
-        stackOps.push(null,stackOps.getStack());
+        stackOps.push(null);
     }
 
     //push to null stack
@@ -62,9 +59,9 @@ public class StackOpsTest {
     public void whenPushElementToNullStackThenAddElement()
     {
         stackOps.setStack(null);
-        stackOps.push(node,stackOps.getStack());
-        Assert.assertEquals(stackOps.peek(stackOps.getStack()),node);
-        Assert.assertFalse(stackOps.isEmpty(stackOps.getStack()));
+        stackOps.push(node);
+        Assert.assertEquals(stackOps.peek(),node);
+        Assert.assertFalse(stackOps.isEmpty());
         Assert.assertEquals(stackOps.getStack().getSize(),1);
     }
 
@@ -72,9 +69,9 @@ public class StackOpsTest {
     @Test
     public void whenPushElementToEmptyStackThenAddElement()
     {
-        stackOps.push(node,stackOps.getStack());
-        Assert.assertEquals(stackOps.peek(stackOps.getStack()),node);
-        Assert.assertFalse(stackOps.isEmpty(stackOps.getStack()));
+        stackOps.push(node);
+        Assert.assertEquals(stackOps.peek(),node);
+        Assert.assertFalse(stackOps.isEmpty());
         Assert.assertEquals(stackOps.getStack().getSize(),1);
     }
 
@@ -82,12 +79,12 @@ public class StackOpsTest {
     @Test
     public void whenPushElementToNonEmptyStackThenAddElement()
     {
-        stackOps.push(node,stackOps.getStack());
+        stackOps.push(node);
 
         Node node1 = new Node(1);
-        stackOps.push(node1,stackOps.getStack());
-        Assert.assertEquals(stackOps.peek(stackOps.getStack()),node1);
-        Assert.assertFalse(stackOps.isEmpty(stackOps.getStack()));
+        stackOps.push(node1);
+        Assert.assertEquals(stackOps.peek(),node1);
+        Assert.assertFalse(stackOps.isEmpty());
         Assert.assertEquals(stackOps.getStack().getSize(),2);
     }
 
@@ -96,23 +93,23 @@ public class StackOpsTest {
     public void whenPopElementFromNullStackThrowException()
     {
         stackOps.setStack(null);
-        stackOps.pop(stackOps.getStack());
+        stackOps.pop();
     }
 
     //empty stack
     @Test(expectedExceptions = RuntimeException.class)
     public void whenPopElementFromEmptyStackThrowException()
     {
-        stackOps.pop(stackOps.getStack());
+        stackOps.pop();
     }
 
     //non-empty, non-null but 1-element stack
     @Test
     public void whenPopElementFromSingleElementStackThenReturnElement()
     {
-        stackOps.push(node,stackOps.getStack());
-        Node poppedElement = stackOps.pop(stackOps.getStack());
-        Assert.assertTrue(stackOps.isEmpty(stackOps.getStack()));
+        stackOps.push(node);
+        Node poppedElement = stackOps.pop();
+        Assert.assertTrue(stackOps.isEmpty());
         Assert.assertEquals(poppedElement,node);
     }
 
@@ -120,18 +117,18 @@ public class StackOpsTest {
     @Test
     public void whenPopElementFromMultiElementStackThenReturnElement()
     {
-        stackOps.push(node,stackOps.getStack());
+        stackOps.push(node);
         Node node1 = new Node(1);
-        stackOps.push(node1,stackOps.getStack());
+        stackOps.push(node1);
 
-        Node poppedElement = stackOps.pop(stackOps.getStack());
-        Assert.assertFalse(stackOps.isEmpty(stackOps.getStack()));
+        Node poppedElement = stackOps.pop();
+        Assert.assertFalse(stackOps.isEmpty());
         Assert.assertEquals(poppedElement,node1);
-        Assert.assertEquals(stackOps.peek(stackOps.getStack()),node);
+        Assert.assertEquals(stackOps.peek(),node);
         Assert.assertEquals(stackOps.getStack().getSize(),1);
     }
 
-    // ########### ########### ########### ###########
+    // ###########
 
     //null or empty
     @Test(expectedExceptions = IllegalArgumentException.class)
@@ -254,373 +251,5 @@ public class StackOpsTest {
         Assert.assertEquals(stackOps.evaluatePostfix("((3(48+)*)2/)"), 18);
         Assert.assertEquals(stackOps.evaluatePostfix("(3(4(82/)+)*)"), 24);
         Assert.assertEquals(stackOps.evaluatePostfix("12+2/5*7+"), 12);
-    }
-
-    // ########### ########### ########### ###########
-
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void whenNullorEmptyInputThrowException()
-    {
-        stackOps.reverse(null);
-        stackOps.reverse("   ");
-    }
-
-    @Test
-    public void whenInputReturnReverse()
-    {
-        Assert.assertEquals(stackOps.reverse("amit"),"tima");
-        Assert.assertEquals(stackOps.reverse("amit k rane"),"enar k tima");
-    }
-
-    // ########### ########### ########### ###########
-
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void whenNullOrInvalidInputsToTwoStacksInArrayThrowException()
-    {
-        stackOps.twoStacksInArray(-1,OperationName.ISEMPTY, null);
-        stackOps.twoStacksInArray(1,null,Optional.of(-1));
-        stackOps.twoStacksInArray(1,OperationName.PUSH, null);
-    }
-
-    @Test
-    public void whenIsEmptyOnEmptyStack1ThenReturnOne()
-    {
-        Assert.assertEquals(Optional.of(stackOps.twoStacksInArray(1, OperationName.ISEMPTY, null).get()),Optional.of(0));
-    }
-
-    @Test
-    public void whenIsEmptyOnNonEmptyStack1ThenReturnEmpty()
-    {
-        stackOps.twoStacksInArray(1,OperationName.PUSH,Optional.of(1));
-        Assert.assertFalse(stackOps.twoStacksInArray(1, OperationName.ISEMPTY, null).isPresent());
-    }
-
-    @Test
-    public void whenIsEmptyOnEmptyStack2ThenReturnOne()
-    {
-        Assert.assertEquals(Optional.of(stackOps.twoStacksInArray(2, OperationName.ISEMPTY, null).get()),Optional.of(0));
-    }
-
-    @Test
-    public void whenIsEmptyOnNonEmptyStack2ThenReturnEmpty()
-    {
-        stackOps.twoStacksInArray(2,OperationName.PUSH,Optional.of(1));
-        //stackOps.twoStacksInArray(2,OperationName.POP,null);
-        Assert.assertFalse(stackOps.twoStacksInArray(2, OperationName.ISEMPTY, null).isPresent());
-    }
-
-    @Test
-    public void whenPeekOnEmptyStack1ThenReturnEmpty()
-    {
-        Assert.assertFalse(stackOps.twoStacksInArray(1, OperationName.PEEK, null).isPresent());
-    }
-
-    @Test
-    public void whenPeekOnNonEmptyStack1ThenReturnElement()
-    {
-        stackOps.twoStacksInArray(1,OperationName.PUSH,Optional.of(2));
-        Assert.assertEquals(stackOps.twoStacksInArray(1, OperationName.PEEK, null).get().intValue(),2);
-    }
-
-    @Test
-    public void whenPeekOnEmptyStack2ThenReturnEmpty()
-    {
-        Assert.assertFalse(stackOps.twoStacksInArray(2, OperationName.PEEK, null).isPresent());
-    }
-
-    @Test
-    public void whenPeekOnNonEmptyStack2ThenReturnElement()
-    {
-        stackOps.twoStacksInArray(2,OperationName.PUSH,Optional.of(3));
-        Assert.assertEquals(stackOps.twoStacksInArray(2, OperationName.PEEK, null).get().intValue(),3);
-    }
-
-    @Test
-    public void whenPushOnEmptyStack1ThenReturn0()
-    {
-        Assert.assertEquals(stackOps.twoStacksInArray(1, OperationName.PUSH, Optional.of(1)).get().intValue(),0);
-    }
-
-    @Test
-    public void whenPushOnNonEmptyStack1ThenReturnElement()
-    {
-        stackOps.twoStacksInArray(1,OperationName.PUSH,Optional.of(2));
-        Assert.assertEquals(stackOps.twoStacksInArray(1, OperationName.PUSH, Optional.of(2)).get().intValue(),0);
-    }
-
-    @Test
-    public void whenPushOnEmptyStack2ThenReturn0()
-    {
-        Assert.assertEquals(stackOps.twoStacksInArray(2, OperationName.PUSH, Optional.of(2)).get().intValue(),0);
-    }
-
-    @Test
-    public void whenPushOnNonEmptyStack2ThenReturnElement()
-    {
-        stackOps.twoStacksInArray(2,OperationName.PUSH,Optional.of(3));
-        Assert.assertEquals(stackOps.twoStacksInArray(2, OperationName.PEEK, Optional.of(2)).get().intValue(),3);
-    }
-
-    @Test(expectedExceptions = RuntimeException.class)
-    public void whenPopOnEmptyStack1ThenThrowException()
-    {
-        stackOps.twoStacksInArray(1, OperationName.POP, null);
-    }
-
-    @Test
-    public void whenPopOnNonEmptyStack1ThenReturnElement()
-    {
-        stackOps.twoStacksInArray(2,OperationName.PUSH,Optional.of(2));
-        Assert.assertEquals(stackOps.twoStacksInArray(2, OperationName.POP, null).get().intValue(),2);
-    }
-
-    @Test(expectedExceptions = RuntimeException.class)
-    public void whenPopOnEmptyStack2ThenThrowException()
-    {
-        stackOps.twoStacksInArray(2, OperationName.POP, null);
-    }
-
-    @Test
-    public void whenPopOnNonEmptyStack2ThenReturnElement()
-    {
-        stackOps.twoStacksInArray(2,OperationName.PUSH,Optional.of(3));
-        Assert.assertEquals(stackOps.twoStacksInArray(2, OperationName.POP, null).get().intValue(),3);
-    }
-
-    // ########### ########### ########### ###########
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void whenNullOrEmptyInputToIsMismatchThrowException()
-    {
-        stackOps.isMisMatch(null);
-        stackOps.isMisMatch("");
-    }
-
-    @Test
-    public void whenBalancedInputToIsMismatchThenReturnTrue()
-    {
-        Assert.assertTrue(stackOps.isMisMatch("(a)"));
-    }
-
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void whenUnBalancedInputToIsMismatch1ThenReturnFalse()
-    {
-        stackOps.isMisMatch("))((");
-    }
-
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void whenUnBalancedInputToIsMismatch2ThenReturnFalse()
-    {
-        Assert.assertFalse(stackOps.isMisMatch("()"));
-    }
-    // ########### ########### ########### ###########
-
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void whenNullOrEmptyInputToNextGreaterElementThrowException()
-    {
-        stackOps.nextGreaterElement(null);
-        stackOps.nextGreaterElement(new int[] {});
-    }
-
-    @Test
-    public void whenNextGreaterElementThenFindNGE()
-    {
-        int[] returnValue = stackOps.nextGreaterElement(new int[]{4,5,2,25});
-        for (int i = 0; i <returnValue.length; i++) {
-            System.out.print("\t"+returnValue[i]);
-        }
-        System.out.println();
-
-        returnValue =  stackOps.nextGreaterElement(new int[] {13,7,6,12});
-        for (int i = 0; i <returnValue.length; i++) {
-            System.out.print("\t"+returnValue[i]);
-        }
-        System.out.println();
-
-
-        returnValue =  stackOps.nextGreaterElement(new int[] {11, 13, 21, 3});
-        for (int i = 0; i <returnValue.length; i++) {
-            System.out.print("\t"+returnValue[i]);
-        }
-        System.out.println();
-    }
-
-    // ########### ########### ########### ###########
-
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void whenNullOrEmptyInputToRecursiveReverseThrowException()
-    {
-        stackOps.recursiveReverse(null,0);
-        stackOps.recursiveReverse(new char[] {},0);
-    }
-
-    @Test
-    public void whenInputToRecursiveReverse()
-    {
-        char[] returnValue =  stackOps.recursiveReverse(new char[] {'a','m','e','i','t'},0);
-        for (int i = 0; i <returnValue.length; i++) {
-            System.out.print("\t"+returnValue[i]);
-        }
-        System.out.println();
-
-        returnValue =  stackOps.recursiveReverse(new char[] {'a','m','i','t',' ','k',' ','r','a','n','e'},0);
-        for (int i = 0; i <returnValue.length; i++) {
-            System.out.print("\t"+returnValue[i]);
-        }
-        System.out.println();
-    }
-    // ########### ########### ########### ###########
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void whenNullOrEmptyInputToRecursiveReverseStackThrowException()
-    {
-        stackOps.recursiveReverseStack(null);
-        stackOps.recursiveReverseStack(new Stack());
-    }
-
-    @Test
-    public void whenRecursiveReverseStackThenReverse()
-    {
-        stackOps.push(node,stackOps.getStack());
-        stackOps.push(new Node(1),stackOps.getStack());
-        stackOps.push(new Node(2),stackOps.getStack());
-        stackOps.push(new Node(3),stackOps.getStack());
-
-        Stack returnStack = stackOps.recursiveReverseStack(stackOps.getStack());
-        while(!stackOps.isEmpty(returnStack))
-        {
-            System.out.print("\t"+stackOps.pop(returnStack));
-        }
-        System.out.println();
-    }
-
-    // ########### ########### ########### ###########
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void whenNullOrEmptyInputToPushKeepingTrackOfMinThenThrowException()
-    {
-        stackOps.pushKeepingTrackOfMin(null);
-    }
-
-    @Test
-    public void whenInputToPushKeepingTrackOfMinToNullStackThenAddElement()
-    {
-        stackOps.setStack(null);
-        stackOps.pushKeepingTrackOfMin(node);
-        Assert.assertNotNull(stackOps.getStack().getTop().getData());
-        Assert.assertEquals(stackOps.getStack().getTop().getData(),stackOps.getMinStack().getTop().getData());
-    }
-
-    @Test
-    public void whenInputToPushKeepingTrackOfMinToSingleElementStackThenAddElement()
-    {
-        stackOps.pushKeepingTrackOfMin(node);
-        stackOps.pushKeepingTrackOfMin(new Node(1));
-        Assert.assertEquals(stackOps.getStack().getTop().getData(),1);
-        Assert.assertEquals(stackOps.getMinStack().getTop().getData(),0);
-    }
-
-    @Test
-    public void whenInputToPushKeepingTrackOfMinToNonSingleElementStackThenAddElement()
-    {
-        stackOps.pushKeepingTrackOfMin(new Node(2));
-        stackOps.pushKeepingTrackOfMin(node);
-        stackOps.pushKeepingTrackOfMin(new Node(1));
-        Assert.assertEquals(stackOps.getStack().getTop().getData(),1);
-        Assert.assertEquals(stackOps.getMinStack().getTop().getData(),0);
-    }
-
-    // ########### ########### ########### ###########
-
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void whenPopKeepingTrackOfMinFromNullStackThenThrowException() throws Exception
-    {
-        stackOps.setStack(null);
-        stackOps.popKeepingTrackOfMin();
-    }
-
-    @Test()
-    public void whenPopKeepingTrackOfMinFromSingleElementStackThenReturnElement() throws Exception
-    {
-        stackOps.pushKeepingTrackOfMin(node);
-        Node node = stackOps.popKeepingTrackOfMin();
-        Assert.assertEquals(node.getData(),0);
-        Assert.assertNull(stackOps.getMinStack().getTop());
-    }
-
-    @Test()
-    public void whenPopKeepingTrackOfMinFromNonSingleElementStackThenReturnElement() throws Exception
-    {
-        stackOps.pushKeepingTrackOfMin(new Node(1));
-        stackOps.pushKeepingTrackOfMin(node);
-        stackOps.pushKeepingTrackOfMin(new Node(2));
-
-        Assert.assertEquals(stackOps.getMinStack().getTop().getData(),0);
-        stackOps.popKeepingTrackOfMin();
-        Assert.assertEquals(stackOps.getStack().getTop().getData(),0);
-        Assert.assertEquals(stackOps.getMinStack().getTop().getData(),0);
-
-        stackOps.popKeepingTrackOfMin();
-        Assert.assertEquals(stackOps.getStack().getTop().getData(),1);
-        Assert.assertEquals(stackOps.getMinStack().getTop().getData(),1);
-    }
-
-    @Test()
-    public void whenKeepingMinTrackThenPerformAllOperationsInConstantTime() throws Exception
-    {
-        stackOps.pushKeepingTrackOfMin(new Node(1));
-        stackOps.pushKeepingTrackOfMin(new Node(2));
-        stackOps.pushKeepingTrackOfMin(new Node(3));
-
-        stackOps.pushKeepingTrackOfMin(node);
-
-        Assert.assertEquals(stackOps.getMinStack().getTop().getData(),0);
-
-        stackOps.popKeepingTrackOfMin();
-        Assert.assertEquals(stackOps.getMinStack().getTop().getData(),1);
-
-        Assert.assertFalse(stackOps.isEmpty(stackOps.getStack()));
-    }
-
-    // ########### ########### ########### ###########
-
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void whenNullInputPushingToStackUsingTwoQueuesThenThrowException()
-    {
-        stackOps.pushUsingTwoQueues(null);
-    }
-
-    @Test()
-    public void whenPushingToStackUsingTwoQueuesToEmptyStackThenAddElement()
-    {
-        stackOps.pushUsingTwoQueues(node);
-    }
-
-    @Test()
-    public void whenPushingToStackUsingTwoQueuesToNonEmptyStackThenAddElement()
-    {
-        stackOps.pushUsingTwoQueues(node);
-        stackOps.pushUsingTwoQueues(new Node(1));
-    }
-
-    @Test(expectedExceptions = RuntimeException.class)
-    public void whenPopToStackUsingTwoQueuesToEmptyStackThenThrowException()
-    {
-        stackOps.popUsingTwoQueues();
-    }
-
-    @Test()
-    public void whenPopToStackUsingTwoQueuesToSingleStackThenPopElement()
-    {
-        stackOps.pushUsingTwoQueues(node);
-        stackOps.popUsingTwoQueues();
-    }
-
-    @Test()
-    public void whenPopToStackUsingTwoQueuesToNonSingleStackThenPopElement()
-    {
-        stackOps.pushUsingTwoQueues(node);
-        stackOps.pushUsingTwoQueues(new Node(1));
-        stackOps.pushUsingTwoQueues(new Node(2));
-
-        Assert.assertEquals(stackOps.popUsingTwoQueues().getData(),2);
-        Assert.assertEquals(stackOps.popUsingTwoQueues().getData(),1);
     }
 }
