@@ -2,6 +2,7 @@ package selfevaluation.LL.stack;
 
 import com.selfevaluation.LL.stack.OperationName;
 import com.selfevaluation.LL.stack.StackOps;
+import com.selfevaluation.base.LinkedList;
 import com.selfevaluation.base.Stack;
 import com.selfevaluation.base.Stack.Node;
 import org.testng.Assert;
@@ -731,4 +732,305 @@ public class StackOpsTest {
 
     // ########### ########### ########### ###########
 
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void whenPushToInvalidStackThenThrowException()
+    {
+        stackOps.pushInKStacks(0,-1);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void whenPushToOverIndexStackNumberThenThrowException()
+    {
+        stackOps.pushInKStacks(0,stackOps.getTotalStacks());
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void whenPushInvalidDataThenThrowException()
+    {
+        stackOps.pushInKStacks(-1,0);
+    }
+
+    //@Test(expectedExceptions = RuntimeException.class)
+    public void whenPushInFullStackThenThrowException()
+    {
+        //how to simulate this -> fill it up or just manipulate the currentTracker value?
+        stackOps.pushInKStacks(0,0);
+    }
+
+    @Test
+    public void whenPushInStackThenIngestElement()
+    {
+        //how to simulate this -> fill it up or just manipulate the currentTracker value?
+        stackOps.pushInKStacks(0,0);
+        stackOps.pushInKStacks(1,0);
+        stackOps.pushInKStacks(100,8);
+
+        Assert.assertEquals(1, stackOps.getTopFromStack(0));
+        Assert.assertEquals(100, stackOps.getTopFromStack(8));
+    }
+
+    // ########### ########### ########### ###########
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void whenPopFromInvalidStackThenThrowException()
+    {
+        stackOps.popFromKStacks(-1);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void whenPopFromOverIndexStackNumberThenThrowException()
+    {
+        stackOps.popFromKStacks(10);
+    }
+
+    @Test(expectedExceptions = RuntimeException.class)
+    public void whenPopFromEmptyStackNumberThenThrowException()
+    {
+        stackOps.popFromKStacks(0);
+    }
+
+    @Test
+    public void whenPopFromNonEmptyStackNumberThenReturnElement()
+    {
+        stackOps.pushInKStacks(0,0);
+        stackOps.pushInKStacks(1,0);
+        stackOps.pushInKStacks(100,8);
+        stackOps.pushInKStacks(200,7);
+        stackOps.pushInKStacks(300,7);
+
+        Assert.assertEquals(1,stackOps.popFromKStacks(0));
+        Assert.assertEquals(300,stackOps.popFromKStacks(7));
+        stackOps.pushInKStacks(400,7);
+        Assert.assertEquals(400,stackOps.popFromKStacks(7));
+        Assert.assertEquals(200,stackOps.getTopFromStack(7));
+    }
+
+    // ########### ########### ########### ###########
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void whenPushInvalidDataToStackUsingOneQThrowException()
+    {
+        stackOps.pushToStackUsingOneQ(-1);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void whenPushDataToNullorEmptyStackUsingOneQThenAddElement()
+    {
+        stackOps.pushToStackUsingOneQ(0);
+    }
+
+    @Test
+    public void whenPushDataToNonEmptyStackUsingOneQThenAddElement()
+    {
+        stackOps.pushToStackUsingOneQ(0);
+        stackOps.pushToStackUsingOneQ(1);
+        stackOps.pushToStackUsingOneQ(2);
+
+        Assert.assertEquals(2,stackOps.getQueue1().get(0).getData());
+    }
+
+    @Test(expectedExceptions = RuntimeException.class)
+    public void whenPopDataFromNullOrEmptyStackUsingOneQThrowException()
+    {
+        stackOps.popFromStackUsingOneQ();
+    }
+
+    @Test
+    public void whenPopDataFromSingleElementStackUsingOneQThrowException()
+    {
+        stackOps.pushToStackUsingOneQ(0);
+        stackOps.popFromStackUsingOneQ();
+    }
+
+    @Test
+    public void whenPopDataFromMultiElementStackUsingOneQThrowException()
+    {
+        stackOps.pushToStackUsingOneQ(0);
+        stackOps.pushToStackUsingOneQ(1);
+        stackOps.pushToStackUsingOneQ(2);
+
+        Assert.assertEquals(2,stackOps.popFromStackUsingOneQ());
+    }
+
+    // ########### ########### ########### ###########
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void whenPushInvalidDataToMeragableStackUsingThenThrowException()
+    {
+        stackOps.pushToMergableStack(-1,1);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void whenPushDataToInvalidMeragableStackUsingThenThrowException()
+    {
+        stackOps.pushToMergableStack(0,3);
+    }
+
+    @Test
+    public void whenPushDataToNullOrEmptyMeragableStackUsingThenAddElement()
+    {
+        stackOps.pushToMergableStack(0,1);
+        Assert.assertEquals(0, stackOps.getList1().getHead().getData());
+    }
+
+    @Test
+    public void whenPushDataToNonEmptyMeragableStackUsingThenAddElement()
+    {
+        stackOps.pushToMergableStack(0,1);
+        stackOps.pushToMergableStack(1,1);
+        Assert.assertEquals(1, stackOps.getList1().getHead().getData());
+        Assert.assertEquals(0, stackOps.getList1().getHead().getNext().getData());
+    }
+
+    // ########### ########### ########### ###########
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void whenPopDataToInvalidMeragableStackUsingThenThrowException()
+    {
+        stackOps.popFromMergableStack(3);
+    }
+
+    @Test(expectedExceptions = RuntimeException.class)
+    public void whenPopDataFromNullOrEmptyMeragableStackUsingThenAddElement()
+    {
+        stackOps.popFromMergableStack(1);
+    }
+
+    @Test
+    public void whenPopDataToNonEmptyMeragableStackUsingThenDeleteElement()
+    {
+        stackOps.pushToMergableStack(0,1);
+        stackOps.pushToMergableStack(1,1);
+        Assert.assertEquals(0, stackOps.getList1().getHead().getNext().getData());
+        stackOps.popFromMergableStack(1);
+        Assert.assertEquals(0, stackOps.getList1().getHead().getData());
+    }
+
+    // ########### ########### ########### ###########
+    @Test(expectedExceptions = RuntimeException.class)
+    public void whenMergeDataToNullStackUsingThenThrowException()
+    {
+        stackOps.mergeStacks();
+    }
+
+    @Test(expectedExceptions = RuntimeException.class)
+    public void whenMergeDataToEmptyStackUsingThenThrowException()
+    {
+        stackOps.pushToMergableStack(1,1);
+        stackOps.popFromMergableStack(1);
+        stackOps.setList2(null);
+        stackOps.mergeStacks();
+    }
+
+    @Test
+    public void whenMergeDataToOneEmptyStackUsingThenThrowException()
+    {
+        stackOps.pushToMergableStack(1,1);
+        stackOps.setList2(null);
+
+        Assert.assertEquals(1,stackOps.mergeStacks().getData());
+    }
+
+    @Test
+    public void whenMergeDataToSecondEmptyStackUsingThenThrowException()
+    {
+        stackOps.pushToMergableStack(1,2);
+        stackOps.setList1(null);
+
+        Assert.assertEquals(1,stackOps.mergeStacks().getData());
+    }
+
+    @Test
+    public void whenMergeDataToNonEmptyStackUsingThenThrowException()
+    {
+        stackOps.pushToMergableStack(1,1);
+        stackOps.pushToMergableStack(2,1);
+        stackOps.pushToMergableStack(3,2);
+        stackOps.pushToMergableStack(4,2);
+
+        LinkedList.Node node = stackOps.mergeStacks();
+        Assert.assertEquals(2,node.getData());
+        Assert.assertEquals(4,node.getNext().getNext().getData());
+        Assert.assertNull(node.getNext().getNext().getNext().getNext());
+    }
+
+    // ########### ########### ########### ###########
+
+    @Test
+    public void whenNullInputRecursiveReverseStackThenReturn()
+    {
+        stackOps.setStack(null);
+        stackOps.recursiveReverseStack();
+    }
+
+    @Test
+    public void whenSingleElementRecursiveReverseStackThenReturnAsIs()
+    {
+        stackOps.push(node,stackOps.getStack());
+        stackOps.recursiveReverseStack();
+        Assert.assertEquals(0,stackOps.getStack().getTop().getData());
+    }
+
+    @Test
+    public void whenRecursiveReverseMultiElementStackThenReturnReversed()
+    {
+
+        stackOps.push(new Node(3), stackOps.getStack());
+        stackOps.push(node,stackOps.getStack());
+        stackOps.push(new Node(2), stackOps.getStack());
+
+        stackOps.push(new Node(4), stackOps.getStack());
+        stackOps.push(new Node(1), stackOps.getStack());
+
+        stackOps.recursiveReverseStack();
+
+        Node node = stackOps.getStack().getTop();
+        do {
+            System.out.print(node.getData()+" \t ");
+            node = node.getNext();
+        }while(node!=null);
+    }
+
+    // ########### ########### ########### ###########
+
+    @Test
+    public void whenNullInputRecursiveSortStackThenReturn()
+    {
+        stackOps.setStack(null);
+        stackOps.recursiveSortStack();
+    }
+
+    @Test
+    public void whenSingleElementRecursiveSortStackThenReturnAsIs()
+    {
+        stackOps.push(node,stackOps.getStack());
+        stackOps.recursiveSortStack();
+        Assert.assertEquals(0,stackOps.getStack().getTop().getData());
+    }
+
+    @Test
+    public void whenRecursiveSortMultiElementStackThenReturnReversed()
+    {
+        stackOps.push(new Node(3), stackOps.getStack());
+        stackOps.push(node,stackOps.getStack());
+        stackOps.push(new Node(2), stackOps.getStack());
+        stackOps.push(new Node(1), stackOps.getStack());
+        stackOps.push(new Node(4), stackOps.getStack());
+
+        Node node = stackOps.getStack().getTop();
+        do {
+            System.out.print(node.getData()+" \t ");
+            node = node.getNext();
+        }while(node!=null);
+        System.out.println();
+
+        stackOps.recursiveSortStack();
+
+        Node node1 = stackOps.getStack().getTop();
+        do {
+            System.out.print(node1.getData()+" \t ");
+            node1 = node1.getNext();
+        }while(node1!=null);
+
+    }
 }

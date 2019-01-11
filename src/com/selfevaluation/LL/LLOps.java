@@ -253,7 +253,7 @@ public class LLOps {
     }
 
     //TODO: Got simpler due to logic as prescribed at https://www.geeksforgeeks.org/linked-list-set-3-deleting-node/
-    public void deleteAtPosition(int position) {
+    public int deleteAtPosition(int position) {
         //null or empty
         if (linkedList == null || linkedList.getHead()==null || position < 0) {
             throw new RuntimeException("Input is invalid");
@@ -269,7 +269,7 @@ public class LLOps {
         {
             linkedList.setHead(current.getNext());
             decrementListSize();
-            return;
+            return current.getData();
         }
 
         //(current != last->next)
@@ -296,6 +296,7 @@ public class LLOps {
         }
         printList(linkedList.getHead());
         System.out.println("\n########");
+        return  current.getData();
     }
 
 
