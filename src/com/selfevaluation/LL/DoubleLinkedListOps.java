@@ -868,7 +868,7 @@ public class DoubleLinkedListOps {
         }
 
         System.out.println();
-        System.out.println("Priting the DLL list");
+        System.out.println("Printing the DLL list");
 
         Node current = head;
         while (current!=null)
