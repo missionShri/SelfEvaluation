@@ -3,6 +3,8 @@ package com.selfevaluation.LL.stack;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Arrays;
+
 @Getter
 @Setter
 public class ArrayStackOps {
@@ -17,6 +19,7 @@ public class ArrayStackOps {
     public ArrayStackOps()
     {
         stack = new int[MAX];
+        Arrays.fill(stack,-1);
         top = -1;
     }
 

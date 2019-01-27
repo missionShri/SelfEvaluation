@@ -1095,16 +1095,19 @@ public class StackOps {
         }
 
         //un-optimized implementation
+        // assumes all previous slots are filled and non pop has happened for the middle elements to be empty...not accurate.
+        // instead maintain a size
         if(currentTracker==99)
         {
             throw new RuntimeException("Stack is full");
         }
 
+        // currentTracker GLOBAL VARIABLE is very helpful to keep track of position to insertAt
         //kStacks contains data
         kStacks[++currentTracker] = data;
         //nextTracker tracks ***index*** of the next element
         nextTracker[currentTracker] = topTracker[stackNumber];
-        //nextTracker tracks ***index*** of the top element
+        //topTracker tracks ***index*** of the top element
         topTracker[stackNumber] = currentTracker;
     }
 
@@ -1124,12 +1127,65 @@ public class StackOps {
 
         int currentTopIndex = topTracker[stackNumber];
         topTracker[stackNumber] = nextTracker[topTracker[stackNumber]];
-        nextTracker[topTracker[stackNumber]] = -1;
+        /*???*/ nextTracker[topTracker[stackNumber]] = -1; //??? or should it be nextTracker[currentTopIndex] ???
         data = kStacks[currentTopIndex];
         kStacks[currentTopIndex] = -1;
 
         return data;
     }
+
+    /** SEE HOW WRONG YOU CAN GO ON SAME QUESTION 3 WEEKS LATER !!!!!
+     * public void implementKQueuesInArray(int kQueues)
+     {
+     if(kQueues<=0)
+     {
+     throw new IllegalArgumentException("Invalid input");
+     }
+     if(queue==null || isEmpty())
+     {
+     throw new RuntimeException("Queue is null/empty");
+     }
+
+     if(kQueues==1)
+     {
+     //copy queue as is to array
+     Node current = queue.getFront();
+     int[] queueArray = new int[queue.getSize()];
+     int i = 0;
+     while (current != null)
+     {
+     queueArray[i++] = current.getData();
+     current = current.getNext();
+     }
+     return;
+     }
+
+     Node[] frontTracker, rearTracker;
+     frontTracker = new Node [kQueues];
+     Arrays.fill(frontTracker,null);
+     rearTracker = new Node [kQueues];
+     Arrays.fill(rearTracker,null);
+     int[] nextTracker = new Node [???];
+     Arrays.fill(nextTracker,-1);
+
+     for(int i = 0 ; i <kQueues; i++)
+     {
+     frontTracker[i] = kQueueArray[i].getFront();
+     rearTracker[i] = kQueueArray[i].getFront();
+     }
+
+     for(int i = 0 ; i <kQueues; i++)
+     {
+     if(rearTracker[kQueues].getNext()!=null)
+     {
+     nextTracker
+     }
+     }
+
+
+     }
+
+     */
 
     public int getTopFromStack(int stackNumber)
     {
@@ -1300,7 +1356,7 @@ public class StackOps {
             return node;
         }
 
-        node = doubleLinkedListOps.deleteLastNode();
+        //node = doubleLinkedListOps.deleteLastNode();
 
         return node;
     }
@@ -1327,11 +1383,11 @@ public class StackOps {
             return node;
         }
 
-        node = doubleLinkedListOps.deleteFirstNode();
+        //node = doubleLinkedListOps.deleteFirstNode();
 
         return node;
     }
-    
+
     //TODO: Tricky
     //operand case (assuming limited operator support)
     private boolean isInputPrecedenceGreaterThanStackTop(char token) {
