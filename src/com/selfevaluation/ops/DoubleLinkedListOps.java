@@ -1,8 +1,7 @@
-package com.selfevaluation.LL;
+package com.selfevaluation.ops;
 
 import com.selfevaluation.base.DoubleLinkedList;
 import com.selfevaluation.base.DoubleLinkedList.Node;
-import com.selfevaluation.base.SingleCircularLinkedList;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -172,6 +171,7 @@ public class DoubleLinkedListOps {
         {
             doubleLinkedList.setHead(newNode);
         }
+
         return;
     }
 

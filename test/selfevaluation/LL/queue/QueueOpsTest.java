@@ -1,6 +1,6 @@
 package selfevaluation.LL.queue;
 
-import com.selfevaluation.LL.queue.QueueOps;
+import com.selfevaluation.ops.queue.QueueOps;
 import com.selfevaluation.base.Queue;
 import com.selfevaluation.base.Queue.Node;
 import org.testng.Assert;

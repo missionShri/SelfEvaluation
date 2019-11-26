@@ -1,6 +1,6 @@
 package selfevaluation.LL.deque;
 
-import com.selfevaluation.LL.deque.ArrayDeQueueOps;
+import com.selfevaluation.ops.deque.ArrayDeQueueOps;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

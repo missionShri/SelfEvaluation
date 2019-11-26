@@ -1,7 +1,7 @@
-package com.selfevaluation.LL.stack;
+package com.selfevaluation.ops.stack;
 
-import com.selfevaluation.LL.DoubleLinkedListOps;
-import com.selfevaluation.LL.LLOps;
+import com.selfevaluation.ops.DoubleLinkedListOps;
+import com.selfevaluation.ops.LLOps;
 import com.selfevaluation.base.DoubleLinkedList;
 import com.selfevaluation.base.LinkedList;
 import com.selfevaluation.base.Stack;
@@ -67,7 +67,7 @@ public class StackOps {
         - List representation
         - Array representation
 
-        - using 1 queue (LL with fifo discipline)
+        - using 1 queue (ops with fifo discipline)
         - 2 queues ()
         - Priority queue
 

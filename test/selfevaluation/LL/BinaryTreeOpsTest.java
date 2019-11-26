@@ -1,16 +1,16 @@
 package selfevaluation.LL;
 
-import com.selfevaluation.LL.BinaryTreeOps;
-import com.selfevaluation.LL.DoubleLinkedListOps;
+import com.selfevaluation.ops.BinaryTreeOps;
+import com.selfevaluation.ops.DoubleLinkedListOps;
+import com.selfevaluation.ops.queue.QueueOps;
 import com.selfevaluation.base.BinaryTree;
 
 import com.selfevaluation.base.BinaryTree.Node;
 import com.selfevaluation.base.DoubleLinkedList;
+import com.selfevaluation.base.Queue;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import java.util.HashMap;
 
 public class BinaryTreeOpsTest {
 
@@ -182,6 +182,45 @@ public class BinaryTreeOpsTest {
     }
 
     // ##########
+
+    @Test
+    public void whenNullRootTreeReturnNullQueuOps()
+    {
+        QueueOps queueOps = null;
+        binaryTreeOps.convertBinaryTreeToQueue(queueOps,null);
+        Assert.assertNull(queueOps);
+    }
+
+    @Test
+    public void whenNullRootNullQueueOpsTreeReturnNullQueuOps()
+    {
+        QueueOps queueOps = null;
+        binaryTreeOps.convertBinaryTreeToQueue(queueOps,null);
+        Assert.assertNull(queueOps);
+    }
+
+    @Test
+    public void whenNonNullRootTreeReturnQueueOps()
+    {
+        BinaryTree binaryTree = new BinaryTree();
+        binaryTree.setRoot(new Node(0));
+        binaryTree.getRoot().setLeft((new Node(1)));
+        binaryTree.getRoot().setRight((new Node(2)));
+
+        binaryTree.getRoot().getLeft().setRight((new Node(3)));
+        binaryTree.getRoot().getRight().setRight((new Node(5)));
+        QueueOps queueOps = new QueueOps(new Queue());
+        binaryTreeOps.convertBinaryTreeToQueue(queueOps, binaryTree.getRoot());
+
+        Assert.assertEquals(queueOps.getQueue().getSize(),5);
+
+        do {
+            System.out.print(queueOps.dequeue().getData() + "\t");
+        }while (queueOps.getQueue().getSize()!=0);
+    }
+
+
+    // #########
     @Test
     public void printTest()
     {

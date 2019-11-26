@@ -1,6 +1,5 @@
-package com.selfevaluation.LL.queue;
+package com.selfevaluation.ops.queue;
 
-import com.sun.tools.corba.se.idl.constExpr.Not;
 import lombok.Getter;
 import lombok.Setter;
 

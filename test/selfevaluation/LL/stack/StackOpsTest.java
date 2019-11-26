@@ -1,7 +1,7 @@
 package selfevaluation.LL.stack;
 
-import com.selfevaluation.LL.stack.OperationName;
-import com.selfevaluation.LL.stack.StackOps;
+import com.selfevaluation.ops.stack.OperationName;
+import com.selfevaluation.ops.stack.StackOps;
 import com.selfevaluation.base.LinkedList;
 import com.selfevaluation.base.Stack;
 import com.selfevaluation.base.Stack.Node;

@@ -1,12 +1,11 @@
-package com.selfevaluation.LL;
+package com.selfevaluation.ops;
 
+import com.selfevaluation.ops.queue.QueueOps;
 import com.selfevaluation.base.BinaryTree;
 import com.selfevaluation.base.BinaryTree.Node;
-import com.selfevaluation.base.DoubleLinkedList;
+import com.selfevaluation.base.Queue;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Map;
 
 @Setter
 @Getter
@@ -23,11 +22,68 @@ public class BinaryTreeOps {
         }
     }
 
+    public boolean insertInLevelOrderBinaryTree(QueueOps queueOps, BinaryTree tree, int data)
+    {
+        convertBinaryTreeToQueue(queueOps, tree.getRoot());
+
+        return false;
+
+    }
+
+    public void convertBinaryTreeToQueue(QueueOps queueOps, BinaryTree.Node root) {
+
+        //zero-element case.
+        if (root == null || root.getData()<0) {
+            return;
+        }
+
+        //first-if-condition-check
+        if(root!=null)
+        {
+            if(queueOps == null)
+            {
+                queueOps = new QueueOps(new Queue());
+            }
+
+            //only add the root, the first time. Later times its some nodes left or right child. So we do not want to add it again
+            //BFS and Pre-order DFS are similar since you worry about the node first and then the children
+            if(queueOps.getQueue().getSize()==0)
+            {
+                queueOps.enqueue(new Queue.Node(root.getData()));
+            }
+
+            //if we postpone it as part of recursive call, then it would be DFS
+            // we enque both children before recurssion to avoid DFS
+            //(root.getLeft()==null)?queueOps.enqueue(new Queue.Node(-1));
+            if(root.getLeft()!= null)
+            {
+                queueOps.enqueue(new Queue.Node(root.getLeft().getData()));
+            }
+            else {
+                queueOps.enqueue(new Queue.Node(-1));
+            }
+            if(root.getRight()!= null)
+            {
+                queueOps.enqueue(new Queue.Node(root.getRight().getData()));
+            }
+            else
+            {
+                queueOps.enqueue(new Queue.Node(-1));
+            }
+
+            //System.out.print(queueOps.getQueue().getRear().getData()+"\t");
+
+            //things only get appended, and not de-qued adding to confusion
+            convertBinaryTreeToQueue(queueOps,root.getLeft());
+            convertBinaryTreeToQueue(queueOps,root.getRight());
+        }
+    }
+
     //Need to pass in root , since that is the basis on which we run recursion
     //O(n) for insertion
     public void insertInBST(Node root , int data/*, int depth*/)
     {
-        if(data<0)
+        if(data<0 /*|| root==null*/)
         {
             throw new IllegalArgumentException("Invalid input");
         }
@@ -43,7 +99,7 @@ public class BinaryTreeOps {
             return;
         }
 
-        //if tree exists
+        //if node exists
         if(root!=null)
         {
             //find next node

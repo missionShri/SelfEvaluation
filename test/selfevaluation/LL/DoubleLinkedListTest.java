@@ -1,10 +1,8 @@
 package selfevaluation.LL;
 
-import com.selfevaluation.LL.DoubleLinkedListOps;
+import com.selfevaluation.ops.DoubleLinkedListOps;
 import com.selfevaluation.base.DoubleLinkedList;
 import com.selfevaluation.base.DoubleLinkedList.Node;
-import java.util.Arrays;
-import java.util.Collection;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;

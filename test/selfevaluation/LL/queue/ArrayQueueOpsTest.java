@@ -1,6 +1,6 @@
 package selfevaluation.LL.queue;
 
-import com.selfevaluation.LL.queue.ArrayQueueOps;
+import com.selfevaluation.ops.queue.ArrayQueueOps;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;

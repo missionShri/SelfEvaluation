@@ -1,6 +1,6 @@
 package selfevaluation.LL;
 
-import com.selfevaluation.LL.SingleCircularListOps;
+import com.selfevaluation.ops.SingleCircularListOps;
 import com.selfevaluation.base.SingleCircularLinkedList;
 import com.selfevaluation.base.SingleCircularLinkedList.Node;
 

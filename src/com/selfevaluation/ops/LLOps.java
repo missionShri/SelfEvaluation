@@ -1,4 +1,4 @@
-package com.selfevaluation.LL;
+package com.selfevaluation.ops;
 
 import com.selfevaluation.base.LinkedList;
 import com.selfevaluation.base.LinkedList.Node;
@@ -61,6 +61,14 @@ public class LLOps {
 
         //current = 1st  element (head)
         Node current = linkedList.getHead();
+
+        //One-element case
+        if(current.getNext() == null && current.getData()==value) {
+            current.setNext(nodeToBeAdded);
+            nodeToBeAdded.setNext(null);
+            incrementListSize();
+            return;
+        }
 
         // Its a bit easier to handle 1-element cases, separately. But leads to code duplication and hairy if-else
         // Better to have a standard SOP for handling them as part of normal addition

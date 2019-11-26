@@ -1,4 +1,4 @@
-package com.selfevaluation.LL.stack;
+package com.selfevaluation.ops.stack;
 
 import lombok.Getter;
 import lombok.Setter;

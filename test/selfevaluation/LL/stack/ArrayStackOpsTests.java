@@ -1,6 +1,6 @@
 package selfevaluation.LL.stack;
 
-import com.selfevaluation.LL.stack.ArrayStackOps;
+import com.selfevaluation.ops.stack.ArrayStackOps;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;

@@ -16,13 +16,13 @@ public class Queue {
 
     @Getter
     @Setter
-    public static class Node {
+    public static class Node<T> {
         //Common
-        private int data;
+        private T data;
         //As per the DS def
         private Queue.Node next;
 
-        public Node(int data)
+        public Node(T data)
         {
             this.data = data;
 

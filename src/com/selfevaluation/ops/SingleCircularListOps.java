@@ -1,4 +1,4 @@
-package com.selfevaluation.LL;
+package com.selfevaluation.ops;
 
 import com.selfevaluation.base.SingleCircularLinkedList;
 import com.selfevaluation.base.SingleCircularLinkedList.Node;
@@ -123,8 +123,8 @@ public class SingleCircularListOps {
 
         //current = 1st  element (head)
         Node current = singleCircularLinkedList.getLast().getNext();
-        /* Generally i like it like the Single connected-LL where we proceed from head to (last->next) null
-           However in case of Circular-LL, there last-> next = first . So the while loop wont even start by the logic of
+        /* Generally i like it like the Single connected-ops where we proceed from head to (last->next) null
+           However in case of Circular-ops, there last-> next = first . So the while loop wont even start by the logic of
            (current != singleCircularLinkedList.getLast().getNext) */
 
         /* I don't like this, since we stop at the second-last node and have to handle the last by going from last->next

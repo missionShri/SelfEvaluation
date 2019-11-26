@@ -1,6 +1,6 @@
 package selfevaluation.LL;
 
-import com.selfevaluation.LL.LLOps;
+import com.selfevaluation.ops.LLOps;
 import com.selfevaluation.base.LinkedList;
 import com.selfevaluation.base.LinkedList.Node;
 import org.testng.Assert;

@@ -1,4 +1,4 @@
-package com.selfevaluation.LL.deque;
+package com.selfevaluation.ops.deque;
 
 import lombok.Getter;
 import lombok.Setter;

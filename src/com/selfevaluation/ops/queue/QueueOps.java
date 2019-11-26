@@ -1,12 +1,9 @@
-package com.selfevaluation.LL.queue;
+package com.selfevaluation.ops.queue;
 
-import com.selfevaluation.base.LinkedList;
 import com.selfevaluation.base.Queue;
 import com.selfevaluation.base.Queue.Node;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Arrays;
 
 @Getter
 @Setter
@@ -93,7 +90,7 @@ public class QueueOps {
         return node;
     }
 
-    private boolean isEmpty()
+    public boolean isEmpty()
     {
         return queue!=null && (queue.getFront()==null && queue.getFront()== queue.getRear());
     }

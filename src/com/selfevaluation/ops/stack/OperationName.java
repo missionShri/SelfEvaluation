@@ -1,4 +1,4 @@
-package com.selfevaluation.LL.stack;
+package com.selfevaluation.ops.stack;
 
 public enum OperationName {
     POP,
