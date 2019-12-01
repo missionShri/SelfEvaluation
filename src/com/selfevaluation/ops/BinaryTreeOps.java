@@ -1,9 +1,9 @@
 package com.selfevaluation.ops;
 
-import com.selfevaluation.ops.queue.QueueOps;
 import com.selfevaluation.base.BinaryTree;
 import com.selfevaluation.base.BinaryTree.Node;
 import com.selfevaluation.base.Queue;
+import com.selfevaluation.ops.queue.QueueOps;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,16 +13,12 @@ public class BinaryTreeOps {
 
     BinaryTree binaryTree;
 
-    public BinaryTreeOps(BinaryTree binaryTree)
+    public BinaryTreeOps(/*BinaryTree binaryTree*/)
     {
-        this.binaryTree = binaryTree;
-        if(this.binaryTree!=null)
-        {
-            this.binaryTree.setRoot(null);
-        }
+        this.binaryTree = new BinaryTree();
     }
 
-    public boolean insertInLevelOrderBinaryTree(QueueOps queueOps, BinaryTree tree, int data)
+    public <T> boolean insertInLevelOrderBinaryTree(QueueOps queueOps, BinaryTree tree, T data)
     {
         convertBinaryTreeToQueue(queueOps, tree.getRoot());
 
@@ -32,8 +28,9 @@ public class BinaryTreeOps {
 
     public void convertBinaryTreeToQueue(QueueOps queueOps, BinaryTree.Node root) {
 
+        //TODO: the problem is now, no good reason to believe that this can only be int...can be any subtype of Number
         //zero-element case.
-        if (root == null || root.getData()<0) {
+        if (root == null || isInputLessThanOrEqualValueToCompareAgainst(root.getData(),0)) {
             return;
         }
 
@@ -81,9 +78,9 @@ public class BinaryTreeOps {
 
     //Need to pass in root , since that is the basis on which we run recursion
     //O(n) for insertion
-    public void insertInBST(Node root , int data/*, int depth*/)
+    public <T extends Number> void insertInBST(Node root , T data/*, int depth*/)
     {
-        if(data<0 /*|| root==null*/)
+        if(isInputLessThanOrEqualValueToCompareAgainst(data, 0) /*|| root==null*/)
         {
             throw new IllegalArgumentException("Invalid input");
         }
@@ -103,13 +100,14 @@ public class BinaryTreeOps {
         if(root!=null)
         {
             //find next node
-            Node next = (data<=root.getData())?root.getLeft():root.getRight();
+            Node next = (isInputLessThanOrEqualValueToCompareAgainst(data, root.getData()))?root.getLeft():root.getRight();
 
             //if null
             if(next==null)
             {
                 Node newNode = new Node(data);
-                if(data<=root.getData())
+                if(isInputLessThanOrEqualValueToCompareAgainst(data, root.getData()))
+
                 {
                     root.setLeft(newNode);
                 }
@@ -178,7 +176,8 @@ public class BinaryTreeOps {
             return;
         }
         createListFromTreeWithExtraSpace(root.getLeft(), doubleLinkedListOps);
-        doubleLinkedListOps.insertAtEnd(root.getData());
+        //TODO : fix DoubleLL
+        doubleLinkedListOps.insertAtEnd(root.getData().intValue());
         createListFromTreeWithExtraSpace(root.getRight(), doubleLinkedListOps);
     }
 
@@ -218,6 +217,15 @@ public class BinaryTreeOps {
         return builder.toString();
     }
 
+    private <T extends Number> boolean isInputLessThanOrEqualValueToCompareAgainst(T data, T valueToCompareAgainst) {
+        if (data instanceof Integer && valueToCompareAgainst instanceof Integer) {
+            return (data.intValue() <= valueToCompareAgainst.intValue());
+        }
+        else if(data instanceof Float && valueToCompareAgainst instanceof Float){
+            return  (data.floatValue()<= valueToCompareAgainst.floatValue());
+        }
+        return false;
+    }
 }
 
 

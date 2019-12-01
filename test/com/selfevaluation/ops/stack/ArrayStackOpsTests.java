@@ -1,4 +1,4 @@
-package selfevaluation.LL.stack;
+package com.selfevaluation.ops.stack;
 
 import com.selfevaluation.ops.stack.ArrayStackOps;
 import org.testng.Assert;

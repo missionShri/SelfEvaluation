@@ -1,4 +1,4 @@
-package selfevaluation.LL;
+package com.selfevaluation.ops;
 
 import com.selfevaluation.ops.BinaryTreeOps;
 import com.selfevaluation.ops.DoubleLinkedListOps;
@@ -19,7 +19,7 @@ public class BinaryTreeOpsTest {
     @BeforeMethod
     public void setup()
     {
-        binaryTreeOps = new BinaryTreeOps(new BinaryTree());
+        binaryTreeOps = new BinaryTreeOps();
     }
 
     //empty node
@@ -132,16 +132,16 @@ public class BinaryTreeOpsTest {
     public void whenInorderInBinaryTreeThenPrintTree()
     {
         //Given
-        binaryTreeOps.getBinaryTree().setRoot(new Node(10));
+        binaryTreeOps.getBinaryTree().setRoot(new Node<>(10));
 
         //When ..
         Node root = binaryTreeOps.getBinaryTree().getRoot();
-        root.setRight(new Node(15));
-        root.getRight().setLeft(new Node(36));
+        root.setRight(new Node<>(15));
+        root.getRight().setLeft(new Node<>(36));
 
-        root.setLeft(new Node(12));
-        root.getLeft().setLeft(new Node(25));
-        root.getLeft().setRight(new Node(30));
+        root.setLeft(new Node<>(12));
+        root.getLeft().setLeft(new Node<>(25));
+        root.getLeft().setRight(new Node<>(30));
 
         //Then
         binaryTreeOps.printTree(binaryTreeOps.getBinaryTree().getRoot());
@@ -155,12 +155,12 @@ public class BinaryTreeOpsTest {
     public void whenConvertBinaryTreeToDLLThenTransform()
     {
         //Given
-        binaryTreeOps.getBinaryTree().setRoot(new Node(10));
+        binaryTreeOps.getBinaryTree().setRoot(new Node<>(10));
 
         //When ..
         Node root = binaryTreeOps.getBinaryTree().getRoot();
-        root.setLeft(new Node(5));
-        root.setRight(new Node(36));
+        root.setLeft(new Node<>(5));
+        root.setRight(new Node<>(36));
 
         /* as from https://www.geeksforgeeks.org/convert-a-binary-tree-to-a-circular-doubly-link-list/
         root.getRight().setLeft(new Node(36));
@@ -203,12 +203,12 @@ public class BinaryTreeOpsTest {
     public void whenNonNullRootTreeReturnQueueOps()
     {
         BinaryTree binaryTree = new BinaryTree();
-        binaryTree.setRoot(new Node(0));
-        binaryTree.getRoot().setLeft((new Node(1)));
-        binaryTree.getRoot().setRight((new Node(2)));
+        binaryTree.setRoot(new Node<>(0));
+        binaryTree.getRoot().setLeft((new Node<>(1)));
+        binaryTree.getRoot().setRight((new Node<>(2)));
 
-        binaryTree.getRoot().getLeft().setRight((new Node(3)));
-        binaryTree.getRoot().getRight().setRight((new Node(5)));
+        binaryTree.getRoot().getLeft().setRight((new Node<>(3)));
+        binaryTree.getRoot().getRight().setRight((new Node<>(5)));
         QueueOps queueOps = new QueueOps(new Queue());
         binaryTreeOps.convertBinaryTreeToQueue(queueOps, binaryTree.getRoot());
 

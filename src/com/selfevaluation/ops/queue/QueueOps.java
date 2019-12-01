@@ -127,7 +127,7 @@ public class QueueOps {
 
             while (n>0)
             {
-                data = dequeue().getData();
+                data = dequeue().getData().intValue();
                 generatedNumbers[originalLength-n] = data+"";
 
 //                enqueue(new Node(node.getData()+"0"));

@@ -1,4 +1,4 @@
-package selfevaluation.LL;
+package com.selfevaluation.ops;
 
 import com.selfevaluation.ops.DoubleLinkedListOps;
 import com.selfevaluation.base.DoubleLinkedList;

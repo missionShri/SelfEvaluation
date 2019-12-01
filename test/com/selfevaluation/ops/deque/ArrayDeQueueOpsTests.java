@@ -1,4 +1,4 @@
-package selfevaluation.LL.deque;
+package com.selfevaluation.ops.deque;
 
 import com.selfevaluation.ops.deque.ArrayDeQueueOps;
 import org.testng.annotations.BeforeMethod;

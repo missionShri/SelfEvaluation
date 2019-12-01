@@ -16,7 +16,7 @@ public class Queue {
 
     @Getter
     @Setter
-    public static class Node<T> {
+    public static class Node<T extends Number> {
         //Common
         private T data;
         //As per the DS def

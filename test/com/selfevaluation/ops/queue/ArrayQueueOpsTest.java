@@ -1,4 +1,4 @@
-package selfevaluation.LL.queue;
+package com.selfevaluation.ops.queue;
 
 import com.selfevaluation.ops.queue.ArrayQueueOps;
 import org.testng.Assert;
